@@ -1,5 +1,7 @@
 using ColorBlock.Entity;
 using Timer = System.Windows.Forms.Timer;
+using System.Media;
+using NAudio.Wave;
 
 namespace ColorBlock;
 
@@ -7,6 +9,8 @@ public partial class Form1 : Form
 {
     // start point 10,10
     // block = x23, y15
+    private readonly List<WaveOutEvent> _waveOuts;
+    private readonly List<AudioFileReader> _audioFileReaders;
     private readonly Block _tempBlock;
     private readonly Random _random;
     private readonly List<Block> _blockList;
@@ -39,6 +43,8 @@ public partial class Form1 : Form
             _blockList = new List<Block>();
             _playTimeTimer = new Timer();
             _playTimeTimer.Tick += Timer_Tick!;
+            _waveOuts = new List<WaveOutEvent>();
+            _audioFileReaders = new List<AudioFileReader>();
         }
 
         {
@@ -68,24 +74,27 @@ public partial class Form1 : Form
             playTimeBar.TabStop = false;
             borderButton.TabStop = false;
             backColorButton.TabStop = false;
+            muteCheckBox.TabStop = false;
         }
 
         {
             scoreLabel.Text = @"";
             highScoreLabel.Text = @"";
-            borderButton.Text = @"블럭 스타일";
-            backColorButton.Text = @"게임 테마";
+            borderButton.Text = @"블럭 변경";
+            backColorButton.Text = @"테마 변경";
+            muteCheckBox.Text = @"음소거";
         }
-
-        // 기본 블럭 색
-        _colorList =
-        [
-            Color.Crimson, Color.LightSalmon, Color.Khaki, Color.SpringGreen,
-            Color.LightSeaGreen, Color.DarkSlateBlue, Color.DarkOrchid, Color.Orchid,
-            Color.Gray, Color.Sienna
-        ];
-
-        highScoreLabel.ForeColor = Color.Red;
+        
+        {
+            _colorList =
+            [
+                Color.Crimson, Color.LightSalmon, Color.Khaki, Color.SpringGreen,
+                Color.LightSeaGreen, Color.DarkSlateBlue, Color.DarkOrchid, Color.Orchid,
+                Color.Gray, Color.Sienna
+            ];
+            
+            highScoreLabel.ForeColor = Color.Red;
+        }
     }
 
     // 초기 설정
@@ -327,6 +336,8 @@ public partial class Form1 : Form
         {
             if (color.Value.Count >= 2)
             {
+                SoundPlay("Pling-Sound.wav", 0.5f);
+                
                 foreach (var indexX in color.Value)
                 {
                     _score++;
@@ -419,6 +430,30 @@ public partial class Form1 : Form
                 break;
         }
     }
+    
+    // 효과음 재생
+    private void SoundPlay(string filePath, float volume)
+    {
+        // 새로운 WaveOutEvent와 AudioFileReader를 생성
+        var waveOut = new WaveOutEvent();
+        var audioFileReader = new AudioFileReader(filePath);
+
+        // 새로 생성된 WaveOutEvent와 AudioFileReader 초기화
+        waveOut.Init(audioFileReader);
+        waveOut.Volume = volume; // 볼륨 설정
+
+        if (muteCheckBox.Checked)
+        {
+            waveOut.Volume = 0;
+        }
+
+        // 재생 시작
+        waveOut.Play();
+
+        // 리스트에 추가하여 추후 관리
+        _waveOuts.Add(waveOut);
+        _audioFileReaders.Add(audioFileReader);
+    }
 
     // 게임 시간 타이머
     private void Timer_Tick(object sender, EventArgs e)
@@ -433,6 +468,7 @@ public partial class Form1 : Form
                 highScoreLabel.Text = $@"{_highScore}";
             }
 
+            SoundPlay("correct-8-ascending.wav", 0.5f);
             Initialize();
             StopGame();
         }
