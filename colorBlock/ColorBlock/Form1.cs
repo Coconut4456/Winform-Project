@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using ColorBlock.Entity;
 using Timer = System.Windows.Forms.Timer;
 using System.Media;
@@ -20,7 +21,7 @@ public partial class Form1 : Form
     private readonly int _maxBlocks;
     private readonly int _rowSize;
     private readonly int _rowCount;
-    private readonly int _playTime;
+    private static int _playTime;
     private int _backColorCount;
     private int _countX;
     private int _countY;
@@ -45,6 +46,7 @@ public partial class Form1 : Form
             _playTimeTimer.Tick += Timer_Tick!;
             _waveOuts = new List<WaveOutEvent>();
             _audioFileReaders = new List<AudioFileReader>();
+            this.KeyDown += Key_Down!;
         }
 
         {
@@ -56,10 +58,10 @@ public partial class Form1 : Form
             _highScore = 0;
             _backColorCount = 0;
             _playTimeTimer.Interval = 1000;
-            playTimeBar.Maximum = _playTime;
         }
 
         {
+            this.KeyPreview = true;
             gameButton.Visible = true;
             scoreLabel.Visible = true;
             highScoreLabel.Visible = true;
@@ -106,6 +108,15 @@ public partial class Form1 : Form
         _score = 0;
         gameButton.Text = @"게임 시작";
         playTimeBar.Text = $@"{_playTime}";
+        playTimeBar.Maximum = _playTime;
+    }
+
+    private void Key_Down(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.M)
+        {
+            new Form2().Show();
+        }
     }
 
     // 게임 시작
@@ -125,6 +136,26 @@ public partial class Form1 : Form
         scoreLabel.Text = @$"{_score}";
         highScoreLabel.Text = $@"{_highScore}";
         gameBackGroundLabel.SendToBack();
+    }
+
+    // 게임 시간 반환
+    public static int GetPlayTime()
+    {
+        return _playTime;
+    }
+
+    // 게임 시간 설정
+    public static void SetPlayTime(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                _playTime -= 10;
+                break;
+            case 1:
+                _playTime += 10;
+                break;
+        }
     }
 
     // 게임 중단
@@ -327,7 +358,7 @@ public partial class Form1 : Form
             }
         }
 
-        if (colors.Count <= 0)
+        if (colors.Count <= 1)
         {
             return;
         }
@@ -336,8 +367,6 @@ public partial class Form1 : Form
         {
             if (color.Value.Count >= 2)
             {
-                SoundPlay("Pling-Sound.wav", 0.5f);
-                
                 foreach (var indexX in color.Value)
                 {
                     _score++;
@@ -346,6 +375,11 @@ public partial class Form1 : Form
                     // _blockList[indexX].Label.BackColor = Color.White;
                 }
             }
+        }
+        
+        if (colors.Any(c => c.Key != Color.White && c.Value.Count >= 2))
+        {
+            SoundPlay("Blop-Sound.mp3", 0.3f);
         }
     }
 
@@ -468,7 +502,7 @@ public partial class Form1 : Form
                 highScoreLabel.Text = $@"{_highScore}";
             }
 
-            SoundPlay("correct-8-ascending.wav", 0.5f);
+            SoundPlay("correct-8-ascending.mp3", 0.5f);
             Initialize();
             StopGame();
         }

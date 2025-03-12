@@ -13,5 +13,6 @@ Global
 		{A61CD5F8-1CD1-41AE-A2F8-74A8158DFE48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A61CD5F8-1CD1-41AE-A2F8-74A8158DFE48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A61CD5F8-1CD1-41AE-A2F8-74A8158DFE48}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A61CD5F8-1CD1-41AE-A2F8-74A8158DFE48}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
