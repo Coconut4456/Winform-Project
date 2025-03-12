@@ -1,0 +1,458 @@
+using ColorBlock.Entity;
+using Timer = System.Windows.Forms.Timer;
+
+namespace ColorBlock;
+
+public partial class Form1 : Form
+{
+    // start point 10,10
+    // block = x23, y15
+    private readonly Random _random;
+    private readonly List<Block> _blockList;
+    private readonly List<Color> _colorList;
+    private readonly Timer _playTimeTimer;
+    private readonly Size _blockSize;
+    private readonly int _maxBlocks;
+    private readonly int _blockFre;
+    private readonly int _rowSize;
+    private readonly int _rowCount;
+    private readonly int _playTime;
+    private int _backColorCount;
+    private int _countX;
+    private int _countY;
+    private int _countTime;
+    private int _score;
+    private int _highScore;
+
+    public Form1()
+    {
+        InitializeComponent();
+        
+        {
+            Initialize();
+            ThemaChange();
+        }
+
+        {
+            _random = new Random();
+            _blockList = new List<Block>();
+            _playTimeTimer = new Timer();
+            _playTimeTimer.Tick += Timer_Tick!;
+        }
+
+        {
+            _blockSize = new Size(25, 25);
+            _maxBlocks = 344;
+            _blockFre = 15;
+            _rowSize = 23;
+            _rowCount = 15;
+            _playTime = 120;
+            _highScore = 0;
+            _backColorCount = 0;
+            _playTimeTimer.Interval = 1000;
+            playTimeBar.Maximum = _playTime;
+        }
+
+        {
+            gameButton.Visible = true;
+            scoreLabel.Visible = true;
+            highScoreLabel.Visible = true;
+            playTimeBar.Visible = false;
+            borderButton.Visible = true;
+            backColorButton.Visible = true;
+        }
+
+        {
+            scoreLabel.TabStop = false;
+            highScoreLabel.TabStop = false;
+            playTimeBar.TabStop = false;
+            borderButton.TabStop = false;
+            backColorButton.TabStop = false;
+        }
+
+        {
+            scoreLabel.Text = @"";
+            highScoreLabel.Text = @"";
+            borderButton.Text = @"블럭 스타일";
+            backColorButton.Text = @"게임 테마";
+        }
+
+        // 기본 블럭 색
+        _colorList =
+        [
+            Color.Crimson, Color.LightSalmon, Color.Khaki, Color.SpringGreen,
+            Color.LightSeaGreen, Color.DarkSlateBlue, Color.DarkOrchid, Color.Orchid,
+            Color.Gray
+        ];
+
+        highScoreLabel.ForeColor = Color.Red;
+    }
+
+    // 초기 설정
+    private void Initialize()
+    {
+        _countTime = _playTime;
+        _countX = 0;
+        _countY = 0;
+        _score = 0;
+        gameButton.Text = @"게임 시작";
+        playTimeBar.Text = $@"{_playTime}";
+    }
+
+    // 게임 시작
+    private void StartGame()
+    {
+        Initialize();
+        ClearBlock();
+        CreateBlock();
+        SetBlockPosition();
+        _playTimeTimer.Start();
+        _countTime = _playTime;
+        playTimeBar.Visible = true;
+        playTimeBar.Value = _countTime;
+        gameButton.Text = @"중단";
+        scoreLabel.Text = @$"{_score}";
+        highScoreLabel.Text = $@"{_highScore}";
+        gameBackGroundLabel.SendToBack();
+    }
+
+    // 게임 중단
+    private void StopGame()
+    {
+        DisableBlock();
+        gameButton.Text = @"게임 시작";
+        _playTimeTimer.Stop();
+        playTimeBar.Visible = false;
+    }
+
+    // 블럭 위치 설정
+    private void SetBlockPosition()
+    {
+        foreach (var block in _blockList)
+        {
+            // block.Label.Location = new Point(10 + _countX * _blockSpace, 10 + _countY * _blockSpace);
+            block.Label.Location =
+                new Point(10 + _countX * (_blockSize.Height + 5), 10 + _countY * (_blockSize.Width + 5));
+            Controls.Add(block.Label);
+            _countX++;
+
+            if (_countX >= _rowSize)
+            {
+                _countX = 0;
+                _countY++;
+            }
+        }
+    }
+
+    // 블럭 객체 생성
+    private void CreateBlock()
+    {
+        for (int i = 0; i <= _maxBlocks; i++)
+        {
+            Block block = new Block();
+            int randomColor = _random.Next(0, _blockFre);
+            block.Label.BackColor = randomColor < _colorList.Count ? _colorList[randomColor] : Color.White;
+            block.Label.Tag = i;
+            block.Label.Click += Label_Click;
+            block.Label.Size = _blockSize;
+            _blockList.Add(block); // block 리스트에 block 객체 추가 (이후 상태 관리)    
+        }
+    }
+
+    // 같은 색의 블럭 확인
+    private void GetCheckList(int index)
+    {
+        int x = index % _rowSize; // 해당 index의 가로 행
+        int y = index / _rowSize; // 해당 index의 세로 행
+
+        // int leftEdge = y * _rowSize; // 가로행 첫번째 index
+        // int rightEdge = y * _rowSize + (_rowSize - 1); // 가로행 마지막 index
+
+        Dictionary<Color, List<int>> colors = new Dictionary<Color, List<int>>(); // color, index를 맵핑
+
+        int checkIndex = index;
+
+        // i = 클릭된 라벨의 가로 index
+        for (int i = x; i >= 0; i--)
+        {
+            checkIndex -= 1; // 확인중인 index를 하나씩 줄이면서 탐색 (좌로 탐색)
+
+            // 탐색중인 범위가 index 범위 초과시 중단
+            if (checkIndex < 0)
+            {
+                break;
+            }
+
+            // 탐색중인 라벨이 비어있지 않을 경우 해당 라벨의 color와 index를 colors에 추가 key:color, value:index
+            if (_blockList[checkIndex].Label.BackColor != Color.White)
+            {
+                Color color = _blockList[checkIndex].Label.BackColor;
+
+                // colors에 추가하려는 color가 없을 경우 새 항목으로 추가
+                if (!colors.ContainsKey(color))
+                {
+                    colors[color] = new List<int>();
+                }
+
+                colors[color].Add(checkIndex); // 추가하려는 color가 해당되는 key에 checkIndex를 value로 해당 List<int>에 추가
+                break;
+            }
+        }
+
+        checkIndex = index; // 재탐색을 위해 클릭된 블럭의 index 재할당
+
+        for (int i = x; i < _rowSize; i++)
+        {
+            checkIndex += 1;
+
+            if (checkIndex > 344)
+            {
+                break;
+            }
+
+            if (_blockList[checkIndex].Label.BackColor != Color.White)
+            {
+                Color color = _blockList[checkIndex].Label.BackColor;
+
+                if (!colors.ContainsKey(color))
+                {
+                    colors[color] = new List<int>();
+                }
+
+                colors[color].Add(checkIndex);
+                break;
+            }
+        }
+
+        checkIndex = index;
+
+        for (int i = y; i > 0; i--)
+        {
+            checkIndex -= _rowSize;
+
+            if (checkIndex < 0)
+            {
+                break;
+            }
+
+            if (_blockList[checkIndex].Label.BackColor != Color.White)
+            {
+                Color color = _blockList[checkIndex].Label.BackColor;
+
+                if (!colors.ContainsKey(color))
+                {
+                    colors[color] = new List<int>();
+                }
+
+                colors[color].Add(checkIndex);
+                break;
+            }
+        }
+
+        checkIndex = index;
+
+        for (int i = y; i < _rowCount - 1; i++)
+        {
+            checkIndex += _rowSize;
+
+            if (checkIndex > 344)
+            {
+                break;
+            }
+
+            if (_blockList[checkIndex].Label.BackColor != Color.White)
+            {
+                Color color = _blockList[checkIndex].Label.BackColor;
+
+                if (!colors.ContainsKey(color))
+                {
+                    colors[color] = new List<int>();
+                }
+
+                colors[color].Add(checkIndex);
+                break;
+            }
+        }
+
+        if (colors.Count <= 0)
+        {
+            return;
+        }
+
+        foreach (var color in colors)
+        {
+            if (color.Value.Count >= 2)
+            {
+                foreach (var indexX in color.Value)
+                {
+                    _score++;
+                    BlockDestroyEffect(indexX);
+                    // _blockList[indexX].Timer.Start();
+                    // _blockList[indexX].Label.BackColor = Color.White;
+                }
+            }
+        }
+    }
+
+    private void BlockDestroyEffect(int index)
+    {
+        _blockList[index].Timer.Start();
+    }
+
+    // 모든 블럭 비우기
+    private void ClearBlock()
+    {
+        if (_blockList.Count > 1)
+        {
+            foreach (var block in _blockList)
+            {
+                Controls.Remove(block.Label);
+            }
+
+            _blockList.Clear();
+        }
+    }
+
+    // 블럭 클릭 비활성화
+    private void DisableBlock()
+    {
+        foreach (var block in _blockList)
+        {
+            block.Label.Enabled = false;
+        }
+    }
+
+    // 테마 변경
+    private void ThemaChange()
+    {
+        switch (_backColorCount)
+        {
+            default:
+                _backColorCount = 0;
+                this.BackColor = Color.Silver;
+                gameButton.BackColor = Color.Gainsboro;
+                gameButton.FlatAppearance.BorderColor = Color.Gray;
+                borderButton.BackColor = Color.Gainsboro;
+                borderButton.FlatAppearance.BorderColor = Color.Gray;
+                backColorButton.BackColor = Color.Gainsboro;
+                backColorButton.FlatAppearance.BorderColor = Color.Gray;
+                highScoreLabel.BackColor = Color.Gray;
+                scoreLabel.BackColor = Color.Gray;
+                break;
+            case 1:
+                this.BackColor = Color.DimGray;
+                gameButton.BackColor = Color.Silver;
+                gameButton.FlatAppearance.BorderColor = Color.DimGray;
+                borderButton.BackColor = Color.Silver;
+                borderButton.FlatAppearance.BorderColor = Color.DimGray;
+                backColorButton.BackColor = Color.Silver;
+                backColorButton.FlatAppearance.BorderColor = Color.DimGray;
+                highScoreLabel.BackColor = Color.Gainsboro;
+                scoreLabel.BackColor = Color.Gainsboro;
+                break;
+            case 2:
+                this.BackColor = Color.Pink;
+                gameButton.BackColor = Color.MistyRose;
+                gameButton.FlatAppearance.BorderColor = Color.Gray;
+                borderButton.BackColor = Color.MistyRose;
+                borderButton.FlatAppearance.BorderColor = Color.Gray;
+                backColorButton.BackColor = Color.MistyRose;
+                backColorButton.FlatAppearance.BorderColor = Color.Gray;
+                highScoreLabel.BackColor = Color.Gainsboro;
+                scoreLabel.BackColor = Color.Gainsboro;
+                break;
+            case 3:
+                this.BackColor = Color.PaleGreen;
+                gameButton.BackColor = Color.Ivory;
+                gameButton.FlatAppearance.BorderColor = Color.DimGray;
+                borderButton.BackColor = Color.Ivory;
+                borderButton.FlatAppearance.BorderColor = Color.DimGray;
+                backColorButton.BackColor = Color.Ivory;
+                backColorButton.FlatAppearance.BorderColor = Color.DimGray;
+                highScoreLabel.BackColor = Color.Gainsboro;
+                scoreLabel.BackColor = Color.Gainsboro;
+                break;
+        }
+    }
+
+    // 게임 시간 타이머
+    private void Timer_Tick(object sender, EventArgs e)
+    {
+        // 시간 종료
+        if (_countTime <= 0)
+        {
+            // 최고 점수 갱신
+            if (_highScore < _score)
+            {
+                _highScore = _score;
+                highScoreLabel.Text = $@"{_highScore}";
+            }
+
+            Initialize();
+            StopGame();
+        }
+
+        _countTime--;
+        playTimeBar.Value = _countTime;
+        scoreLabel.Text = @$"{_score}";
+    }
+
+    // 블럭 클릭
+    private void Label_Click(object? sender, EventArgs e)
+    {
+        Label? clickedLabel = sender as Label;
+
+        // 빈 블럭이면 중단
+        if (clickedLabel != null && clickedLabel.BackColor != Color.White)
+        {
+            return;
+        }
+
+        // 예외 처리
+        if (clickedLabel != null && clickedLabel.Tag != null)
+        {
+            GetCheckList((int)clickedLabel.Tag);
+        }
+    }
+
+    // 게임 시작 버튼
+    private void gameButton_Click(object sender, EventArgs e)
+    {
+        switch (gameButton.Text)
+        {
+            case @"게임 시작":
+                StartGame();
+                break;
+            case @"중단":
+                StopGame();
+                break;
+        }
+    }
+
+    // 블럭 테두리 변경
+    private void borderButton_Click(object sender, EventArgs e)
+    {
+        foreach (var block in _blockList)
+        {
+            switch (block.Label.BorderStyle)
+            {
+                case BorderStyle.None:
+                    block.Label.BorderStyle = BorderStyle.FixedSingle;
+                    break;
+                case BorderStyle.FixedSingle:
+                    block.Label.BorderStyle = BorderStyle.Fixed3D;
+                    break;
+                case BorderStyle.Fixed3D:
+                    block.Label.BorderStyle = BorderStyle.None;
+                    break;
+            }
+        }
+    }
+
+    // 게임 배경 색 변경
+    private void backColorButton_Click(object sender, EventArgs e)
+    {
+        _backColorCount++;
+        ThemaChange();
+    }
+}

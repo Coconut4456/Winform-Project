@@ -1,0 +1,17 @@
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\bin\Release\net9.0-windows\ColorBlock.exe
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\bin\Release\net9.0-windows\ColorBlock.deps.json
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\bin\Release\net9.0-windows\ColorBlock.runtimeconfig.json
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\bin\Release\net9.0-windows\ColorBlock.dll
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\bin\Release\net9.0-windows\ColorBlock.pdb
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.Form1.resources
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.csproj.GenerateResource.cache
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.GeneratedMSBuildEditorConfig.editorconfig
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.AssemblyInfoInputs.cache
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.AssemblyInfo.cs
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.csproj.CoreCompileInputs.cache
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.sourcelink.json
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.dll
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\refint\ColorBlock.dll
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.pdb
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ColorBlock.genruntimeconfig.cache
+C:\.Coding\RiderProjects\ColorBlock\ColorBlock\obj\Release\net9.0-windows\ref\ColorBlock.dll
