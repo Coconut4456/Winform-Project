@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Documents\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj": {}
+    "C:\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Documents\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj": {
+    "C:\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Documents\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj",
+        "projectUniqueName": "C:\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj",
         "projectName": "ColorBlock",
-        "projectPath": "C:\\Users\\Administrator\\Documents\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj",
+        "projectPath": "C:\\.project\\project_winform\\colorBlock\\ColorBlock\\ColorBlock.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Documents\\.project\\project_winform\\colorBlock\\ColorBlock\\obj\\",
+        "outputPath": "C:\\.project\\project_winform\\colorBlock\\ColorBlock\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -60,6 +60,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[9.0.2, 9.0.2]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[9.0.2, 9.0.2]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[9.0.2, 9.0.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -69,6 +83,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Users\\Administrator\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

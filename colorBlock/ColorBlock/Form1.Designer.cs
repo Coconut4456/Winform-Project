@@ -35,8 +35,9 @@ partial class Form1
         playTimeBar = new System.Windows.Forms.ProgressBar();
         gameBackGroundLabel = new System.Windows.Forms.Label();
         borderButton = new System.Windows.Forms.Button();
-        backColorButton = new System.Windows.Forms.Button();
+        themeButton = new System.Windows.Forms.Button();
         muteCheckBox = new System.Windows.Forms.CheckBox();
+        backColorButton = new System.Windows.Forms.Button();
         SuspendLayout();
         // 
         // gameButton
@@ -119,22 +120,22 @@ partial class Form1
         borderButton.Visible = false;
         borderButton.Click += borderButton_Click;
         // 
-        // backColorButton
+        // themeButton
         // 
-        backColorButton.BackColor = System.Drawing.Color.Gainsboro;
-        backColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        backColorButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-        backColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        backColorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)129));
-        backColorButton.ForeColor = System.Drawing.Color.Black;
-        backColorButton.Location = new System.Drawing.Point(91, 480);
-        backColorButton.Name = "backColorButton";
-        backColorButton.Size = new System.Drawing.Size(80, 55);
-        backColorButton.TabIndex = 9;
-        backColorButton.Text = "backColorButton";
-        backColorButton.UseVisualStyleBackColor = false;
-        backColorButton.Visible = false;
-        backColorButton.Click += backColorButton_Click;
+        themeButton.BackColor = System.Drawing.Color.Gainsboro;
+        themeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        themeButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+        themeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        themeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)129));
+        themeButton.ForeColor = System.Drawing.Color.Black;
+        themeButton.Location = new System.Drawing.Point(91, 480);
+        themeButton.Name = "themeButton";
+        themeButton.Size = new System.Drawing.Size(80, 55);
+        themeButton.TabIndex = 9;
+        themeButton.Text = "themeButton";
+        themeButton.UseVisualStyleBackColor = false;
+        themeButton.Visible = false;
+        themeButton.Click += themeButton_Click;
         // 
         // muteCheckBox
         // 
@@ -151,13 +152,31 @@ partial class Form1
         muteCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         muteCheckBox.UseVisualStyleBackColor = false;
         // 
+        // backColorButton
+        // 
+        backColorButton.BackColor = System.Drawing.Color.Gainsboro;
+        backColorButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        backColorButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+        backColorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        backColorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)129));
+        backColorButton.ForeColor = System.Drawing.Color.Black;
+        backColorButton.Location = new System.Drawing.Point(177, 480);
+        backColorButton.Name = "backColorButton";
+        backColorButton.Size = new System.Drawing.Size(80, 55);
+        backColorButton.TabIndex = 11;
+        backColorButton.Text = "backColorButton";
+        backColorButton.UseVisualStyleBackColor = false;
+        backColorButton.Visible = false;
+        backColorButton.Click += backColorButton_Click;
+        // 
         // Form1
         // 
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
         BackColor = System.Drawing.Color.Silver;
         ClientSize = new System.Drawing.Size(704, 541);
-        Controls.Add(muteCheckBox);
         Controls.Add(backColorButton);
+        Controls.Add(muteCheckBox);
+        Controls.Add(themeButton);
         Controls.Add(borderButton);
         Controls.Add(playTimeBar);
         Controls.Add(highScoreLabel);
@@ -175,9 +194,11 @@ partial class Form1
         ResumeLayout(false);
     }
 
+    private System.Windows.Forms.Button backColorButton;
+
     private System.Windows.Forms.CheckBox muteCheckBox;
 
-    private System.Windows.Forms.Button backColorButton;
+    private System.Windows.Forms.Button themeButton;
 
     private System.Windows.Forms.Button borderButton;
 

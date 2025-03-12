@@ -67,6 +67,7 @@ public partial class Form1 : Form
             highScoreLabel.Visible = true;
             playTimeBar.Visible = false;
             borderButton.Visible = true;
+            themeButton.Visible = true;
             backColorButton.Visible = true;
         }
 
@@ -75,7 +76,7 @@ public partial class Form1 : Form
             highScoreLabel.TabStop = false;
             playTimeBar.TabStop = false;
             borderButton.TabStop = false;
-            backColorButton.TabStop = false;
+            themeButton.TabStop = false;
             muteCheckBox.TabStop = false;
         }
 
@@ -83,7 +84,8 @@ public partial class Form1 : Form
             scoreLabel.Text = @"";
             highScoreLabel.Text = @"";
             borderButton.Text = @"블럭 변경";
-            backColorButton.Text = @"테마 변경";
+            themeButton.Text = @"테마 변경";
+            backColorButton.Text = @"배경 변경";
             muteCheckBox.Text = @"음소거";
         }
         
@@ -358,7 +360,7 @@ public partial class Form1 : Form
             }
         }
 
-        if (colors.Count <= 1)
+        if (colors.Count <= 0)
         {
             return;
         }
@@ -424,6 +426,8 @@ public partial class Form1 : Form
                 gameButton.FlatAppearance.BorderColor = Color.Gray;
                 borderButton.BackColor = Color.Gainsboro;
                 borderButton.FlatAppearance.BorderColor = Color.Gray;
+                themeButton.BackColor = Color.Gainsboro;
+                themeButton.FlatAppearance.BorderColor = Color.Gray;
                 backColorButton.BackColor = Color.Gainsboro;
                 backColorButton.FlatAppearance.BorderColor = Color.Gray;
                 highScoreLabel.BackColor = Color.Gray;
@@ -435,6 +439,8 @@ public partial class Form1 : Form
                 gameButton.FlatAppearance.BorderColor = Color.DimGray;
                 borderButton.BackColor = Color.Silver;
                 borderButton.FlatAppearance.BorderColor = Color.DimGray;
+                themeButton.BackColor = Color.Silver;
+                themeButton.FlatAppearance.BorderColor = Color.DimGray;
                 backColorButton.BackColor = Color.Silver;
                 backColorButton.FlatAppearance.BorderColor = Color.DimGray;
                 highScoreLabel.BackColor = Color.Gainsboro;
@@ -446,6 +452,8 @@ public partial class Form1 : Form
                 gameButton.FlatAppearance.BorderColor = Color.Gray;
                 borderButton.BackColor = Color.MistyRose;
                 borderButton.FlatAppearance.BorderColor = Color.Gray;
+                themeButton.BackColor = Color.MistyRose;
+                themeButton.FlatAppearance.BorderColor = Color.Gray;
                 backColorButton.BackColor = Color.MistyRose;
                 backColorButton.FlatAppearance.BorderColor = Color.Gray;
                 highScoreLabel.BackColor = Color.Gainsboro;
@@ -457,6 +465,8 @@ public partial class Form1 : Form
                 gameButton.FlatAppearance.BorderColor = Color.DimGray;
                 borderButton.BackColor = Color.Ivory;
                 borderButton.FlatAppearance.BorderColor = Color.DimGray;
+                themeButton.BackColor = Color.Ivory;
+                themeButton.FlatAppearance.BorderColor = Color.DimGray;
                 backColorButton.BackColor = Color.Ivory;
                 backColorButton.FlatAppearance.BorderColor = Color.DimGray;
                 highScoreLabel.BackColor = Color.Gainsboro;
@@ -567,10 +577,23 @@ public partial class Form1 : Form
         }
     }
 
-    // 게임 배경 색 변경
-    private void backColorButton_Click(object sender, EventArgs e)
+    // 시스템 색 변경
+    private void themeButton_Click(object sender, EventArgs e)
     {
         _backColorCount++;
         ThemeChange();
+    }
+
+    // 배경 색 변경
+    private void backColorButton_Click(object sender, EventArgs e)
+    {
+        if (gameBackGroundLabel.BackColor == Color.WhiteSmoke)
+        {
+            gameBackGroundLabel.BackColor = Color.Gainsboro;
+        }
+        else
+        {
+            gameBackGroundLabel.BackColor = Color.WhiteSmoke;
+        }
     }
 }
