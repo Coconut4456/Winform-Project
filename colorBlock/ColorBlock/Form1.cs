@@ -7,13 +7,13 @@ public partial class Form1 : Form
 {
     // start point 10,10
     // block = x23, y15
+    private readonly Block _tempBlock;
     private readonly Random _random;
     private readonly List<Block> _blockList;
     private readonly List<Color> _colorList;
     private readonly Timer _playTimeTimer;
     private readonly Size _blockSize;
     private readonly int _maxBlocks;
-    private readonly int _blockFre;
     private readonly int _rowSize;
     private readonly int _rowCount;
     private readonly int _playTime;
@@ -30,10 +30,11 @@ public partial class Form1 : Form
         
         {
             Initialize();
-            ThemaChange();
+            ThemeChange();
         }
 
         {
+            _tempBlock = new Block();
             _random = new Random();
             _blockList = new List<Block>();
             _playTimeTimer = new Timer();
@@ -42,8 +43,7 @@ public partial class Form1 : Form
 
         {
             _blockSize = new Size(25, 25);
-            _maxBlocks = 344;
-            _blockFre = 15;
+            _maxBlocks = 345;
             _rowSize = 23;
             _rowCount = 15;
             _playTime = 120;
@@ -82,7 +82,7 @@ public partial class Form1 : Form
         [
             Color.Crimson, Color.LightSalmon, Color.Khaki, Color.SpringGreen,
             Color.LightSeaGreen, Color.DarkSlateBlue, Color.DarkOrchid, Color.Orchid,
-            Color.Gray
+            Color.Gray, Color.Sienna
         ];
 
         highScoreLabel.ForeColor = Color.Red;
@@ -105,6 +105,8 @@ public partial class Form1 : Form
         Initialize();
         ClearBlock();
         CreateBlock();
+        Shuffle();
+        SetTag();
         SetBlockPosition();
         _playTimeTimer.Start();
         _countTime = _playTime;
@@ -147,15 +149,57 @@ public partial class Form1 : Form
     // 블럭 객체 생성
     private void CreateBlock()
     {
-        for (int i = 0; i <= _maxBlocks; i++)
+        // 10개의 색상 각각 20개의 블럭 생성 (총 20개씩 200개 = 최고점수 200점)
+        foreach (var color in _colorList)
         {
-            Block block = new Block();
-            int randomColor = _random.Next(0, _blockFre);
-            block.Label.BackColor = randomColor < _colorList.Count ? _colorList[randomColor] : Color.White;
-            block.Label.Tag = i;
-            block.Label.Click += Label_Click;
-            block.Label.Size = _blockSize;
-            _blockList.Add(block); // block 리스트에 block 객체 추가 (이후 상태 관리)    
+            for (int j = 0; j < 20; j++)
+            {
+                Block block = new Block();
+                block.Label.BackColor = color;
+                block.Label.Click += Label_Click;
+                block.Label.Size = _blockSize;
+                block.Label.BorderStyle = _tempBlock.Label.BorderStyle;
+                _blockList.Add(block);
+            }
+        }
+
+        if (_blockList.Count < _maxBlocks)
+        {
+            int n = _maxBlocks - _blockList.Count; // n = 145
+
+            for (int i = 0; i < n; i++)
+            {
+                Block block = new Block();
+                block.Label.BackColor = Color.White;
+                block.Label.Click += Label_Click;
+                block.Label.Size = _blockSize;
+                block.Label.BorderStyle = _tempBlock.Label.BorderStyle;
+                _blockList.Add(block);
+            }
+        }
+    }
+
+    // 리스트 섞기
+    private void Shuffle()
+    {
+        int n = _blockList.Count - 1;
+
+        for (int i = n; i > 0 ; i--)
+        {
+            int j = _random.Next(i + 1);
+            (_blockList[i], _blockList[j]) = (_blockList[j], _blockList[i]); // .
+        }
+    }
+
+    // 라벨 태그에 index 값 부여
+    private void SetTag()
+    {
+        int index = 0;
+        
+        foreach (var block in _blockList)
+        {
+            block.Label.Tag = index;
+            index++;
         }
     }
 
@@ -294,6 +338,7 @@ public partial class Form1 : Form
         }
     }
 
+    // 블럭 삭제 이펙트
     private void BlockDestroyEffect(int index)
     {
         _blockList[index].Timer.Start();
@@ -323,7 +368,7 @@ public partial class Form1 : Form
     }
 
     // 테마 변경
-    private void ThemaChange()
+    private void ThemeChange()
     {
         switch (_backColorCount)
         {
@@ -438,12 +483,15 @@ public partial class Form1 : Form
             {
                 case BorderStyle.None:
                     block.Label.BorderStyle = BorderStyle.FixedSingle;
+                    _tempBlock.Label.BorderStyle = BorderStyle.FixedSingle;
                     break;
                 case BorderStyle.FixedSingle:
                     block.Label.BorderStyle = BorderStyle.Fixed3D;
+                    _tempBlock.Label.BorderStyle = BorderStyle.Fixed3D;
                     break;
                 case BorderStyle.Fixed3D:
                     block.Label.BorderStyle = BorderStyle.None;
+                    _tempBlock.Label.BorderStyle = BorderStyle.None;
                     break;
             }
         }
@@ -453,6 +501,6 @@ public partial class Form1 : Form
     private void backColorButton_Click(object sender, EventArgs e)
     {
         _backColorCount++;
-        ThemaChange();
+        ThemeChange();
     }
 }
