@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ColorBlock")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b702ae989d94d8a51a7ab909627e7e824c2e8df")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8393b1528a95e905badcb1de3a21199c04bd81a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ColorBlock")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ColorBlock")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
