@@ -12,6 +12,7 @@ public partial class Form1 : Form
     // block = x23, y15
     private readonly List<WaveOutEvent> _waveOuts;
     private readonly List<AudioFileReader> _audioFileReaders;
+    private readonly Dictionary<Color, List<int>> _colors;
     private readonly Block _tempBlock;
     private readonly Random _random;
     private readonly List<Block> _blockList;
@@ -32,7 +33,7 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-        
+
         {
             Initialize();
             ThemeChange();
@@ -44,12 +45,14 @@ public partial class Form1 : Form
             _blockList = new List<Block>();
             _playTimeTimer = new Timer();
             _playTimeTimer.Tick += Timer_Tick!;
+            _colors = new Dictionary<Color, List<int>>();
             _waveOuts = new List<WaveOutEvent>();
             _audioFileReaders = new List<AudioFileReader>();
             this.KeyDown += Key_Down!;
         }
 
         {
+            this.Size = new Size(900, 580);
             _blockSize = new Size(25, 25);
             _maxBlocks = 345;
             _rowSize = 23;
@@ -82,13 +85,15 @@ public partial class Form1 : Form
 
         {
             scoreLabel.Text = @"";
+            scoreTextLabel.Text = @"현재 점수";
             highScoreLabel.Text = @"";
+            highScoreTextLabel.Text = @"최고 점수";
             borderButton.Text = @"블럭 변경";
             themeButton.Text = @"테마 변경";
             backColorButton.Text = @"배경 변경";
             muteCheckBox.Text = @"음소거";
         }
-        
+
         {
             _colorList =
             [
@@ -96,7 +101,7 @@ public partial class Form1 : Form
                 Color.LightSeaGreen, Color.DarkSlateBlue, Color.DarkOrchid, Color.Orchid,
                 Color.Gray, Color.Sienna
             ];
-            
+
             highScoreLabel.ForeColor = Color.Red;
         }
     }
@@ -226,7 +231,7 @@ public partial class Form1 : Form
     {
         int n = _blockList.Count - 1;
 
-        for (int i = n; i > 0 ; i--)
+        for (int i = n; i > 0; i--)
         {
             int j = _random.Next(i + 1);
             (_blockList[i], _blockList[j]) = (_blockList[j], _blockList[i]); // .
@@ -237,7 +242,7 @@ public partial class Form1 : Form
     private void SetTag()
     {
         int index = 0;
-        
+
         foreach (var block in _blockList)
         {
             block.Label.Tag = index;
@@ -254,16 +259,16 @@ public partial class Form1 : Form
         // int leftEdge = y * _rowSize; // 가로행 첫번째 index
         // int rightEdge = y * _rowSize + (_rowSize - 1); // 가로행 마지막 index
 
-        Dictionary<Color, List<int>> colors = new Dictionary<Color, List<int>>(); // color, index를 맵핑
 
         int checkIndex = index;
 
-        // i = 클릭된 라벨의 가로 index
+        // 클릭된 블럭 기준으로부터 탐색 시작
+        
+        // 좌측으로 탐색
         for (int i = x; i >= 0; i--)
         {
-            checkIndex -= 1; // 확인중인 index를 하나씩 줄이면서 탐색 (좌로 탐색)
+            checkIndex -= 1;
 
-            // 탐색중인 범위가 index 범위 초과시 중단
             if (checkIndex < 0)
             {
                 break;
@@ -275,18 +280,19 @@ public partial class Form1 : Form
                 Color color = _blockList[checkIndex].Label.BackColor;
 
                 // colors에 추가하려는 color가 없을 경우 새 항목으로 추가
-                if (!colors.ContainsKey(color))
+                if (!_colors.ContainsKey(color))
                 {
-                    colors[color] = new List<int>();
+                    _colors[color] = new List<int>();
                 }
 
-                colors[color].Add(checkIndex); // 추가하려는 color가 해당되는 key에 checkIndex를 value로 해당 List<int>에 추가
+                _colors[color].Add(checkIndex); // 추가하려는 color가 해당되는 key에 checkIndex를 value로 해당 List<int>에 추가
                 break;
             }
         }
 
         checkIndex = index; // 재탐색을 위해 클릭된 블럭의 index 재할당
 
+        // 우측으로 탐색
         for (int i = x; i < _rowSize; i++)
         {
             checkIndex += 1;
@@ -300,18 +306,19 @@ public partial class Form1 : Form
             {
                 Color color = _blockList[checkIndex].Label.BackColor;
 
-                if (!colors.ContainsKey(color))
+                if (!_colors.ContainsKey(color))
                 {
-                    colors[color] = new List<int>();
+                    _colors[color] = new List<int>();
                 }
 
-                colors[color].Add(checkIndex);
+                _colors[color].Add(checkIndex);
                 break;
             }
         }
 
         checkIndex = index;
 
+        // 상단으로 탐색
         for (int i = y; i > 0; i--)
         {
             checkIndex -= _rowSize;
@@ -325,18 +332,19 @@ public partial class Form1 : Form
             {
                 Color color = _blockList[checkIndex].Label.BackColor;
 
-                if (!colors.ContainsKey(color))
+                if (!_colors.ContainsKey(color))
                 {
-                    colors[color] = new List<int>();
+                    _colors[color] = new List<int>();
                 }
 
-                colors[color].Add(checkIndex);
+                _colors[color].Add(checkIndex);
                 break;
             }
         }
 
         checkIndex = index;
 
+        // 하단으로 탐색
         for (int i = y; i < _rowCount - 1; i++)
         {
             checkIndex += _rowSize;
@@ -350,39 +358,40 @@ public partial class Form1 : Form
             {
                 Color color = _blockList[checkIndex].Label.BackColor;
 
-                if (!colors.ContainsKey(color))
+                if (!_colors.ContainsKey(color))
                 {
-                    colors[color] = new List<int>();
+                    _colors[color] = new List<int>();
                 }
 
-                colors[color].Add(checkIndex);
+                _colors[color].Add(checkIndex);
                 break;
             }
         }
 
-        if (colors.Count <= 0)
+        // 탐색된 색 블럭이 없을 경우 중단
+        if (_colors.Count <= 0)
         {
             return;
         }
 
-        foreach (var color in colors)
+        foreach (var color in _colors)
         {
             if (color.Value.Count >= 2)
             {
                 foreach (var indexX in color.Value)
                 {
-                    _score++;
+                    ScoreUp();
                     BlockDestroyEffect(indexX);
-                    // _blockList[indexX].Timer.Start();
-                    // _blockList[indexX].Label.BackColor = Color.White;
                 }
             }
         }
-        
-        if (colors.Any(c => c.Key != Color.White && c.Value.Count >= 2))
+
+        if (_colors.Any(c => c.Key != Color.White && c.Value.Count >= 2))
         {
             SoundPlay("Blop-Sound.mp3", 0.3f);
         }
+        
+        _colors.Clear();
     }
 
     // 블럭 삭제 이펙트
@@ -412,6 +421,13 @@ public partial class Form1 : Form
         {
             block.Label.Enabled = false;
         }
+    }
+
+    // 점수 추가 및 라벨 표시
+    private void ScoreUp()
+    {
+        _score++;
+        scoreLabel.Text = @$"{_score}";
     }
 
     // 테마 변경
@@ -474,7 +490,7 @@ public partial class Form1 : Form
                 break;
         }
     }
-    
+
     // 효과음 재생
     private void SoundPlay(string filePath, float volume)
     {
@@ -519,7 +535,6 @@ public partial class Form1 : Form
 
         _countTime--;
         playTimeBar.Value = _countTime;
-        scoreLabel.Text = @$"{_score}";
     }
 
     // 블럭 클릭

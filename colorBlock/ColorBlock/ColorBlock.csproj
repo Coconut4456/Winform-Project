@@ -9,13 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NAudio" Version="2.2.1" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="Form2.cs">
         <SubType>Form</SubType>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NAudio" Version="2.2.1" />
     </ItemGroup>
 
 </Project>
