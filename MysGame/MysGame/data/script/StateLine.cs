@@ -1,8 +1,8 @@
-﻿namespace MysGame.Data.Cl;
+﻿namespace MysGame.data.script;
 
 public enum StateLine
 {
+    Home,
     Prologue,
-    Title,
     Playing,
 }

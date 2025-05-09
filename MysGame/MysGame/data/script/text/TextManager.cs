@@ -1,6 +1,6 @@
 ﻿using Timer = System.Windows.Forms.Timer;
 
-namespace MysGame.Data.Cl;
+namespace MysGame.data.script.text;
 
 public class TextManager
 {
@@ -11,9 +11,13 @@ public class TextManager
     private int _currentIndex;
     private bool _isPrinting;
 
-    public TextManager(string path, Control control)
+    public TextManager(Control control)
     {
-        TextLoader.Load(path);
+        string narrationPath = "data/resource/text/ko/narration.json";
+        string dialoguePath = "data/resource/text/ko/dialogue.json";
+        string uiPath = "data/resource/text/ko/ui.json";
+        
+        TextLoader.LoadTexts(narrationPath, dialoguePath, uiPath);
         _textBox = control;
         _textStringList = new List<string>();
         _textCharList = new List<char>();
@@ -22,6 +26,12 @@ public class TextManager
         _typingTimer.Interval = 100;
         _currentIndex = 0;
         _isPrinting = false;
+    }
+
+    // 텍스트 박스 컨트롤 반환
+    public Control GetTextBox()
+    {
+        return _textBox;
     }
 
     // 텍스트 불러오기

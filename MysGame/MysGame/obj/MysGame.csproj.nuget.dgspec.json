@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj": {}
+    "Y:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj": {}
   },
   "projects": {
-    "C:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj": {
+    "Y:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj",
+        "projectUniqueName": "Y:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj",
         "projectName": "MysGame",
-        "projectPath": "C:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\.project\\project_winform\\MysGame\\MysGame\\obj\\",
+        "projectPath": "Y:\\.project\\project_winform\\MysGame\\MysGame\\MysGame.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "Y:\\.project\\project_winform\\MysGame\\MysGame\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0-windows"
@@ -36,9 +36,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0-windows7.0": {
@@ -68,7 +68,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\ASUS\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\PC\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

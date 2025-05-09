@@ -1,20 +1,16 @@
-﻿using MysGame.Data.Cl.UI;
-
-namespace MysGame.Data.Cl;
+﻿namespace MysGame.data.script.ui;
 
 public class UIManager
 {
+    public readonly List<Control> PanelList;
+    public readonly List<Control> LabelList;
+    public readonly List<Control> ButtonList;
     
-    public UIManager() {}
-
-    // 폼 컨트롤 업데이트
-    public void ControlUpdate(List<Control> controlList)
+    public UIManager(List<Control> panels, List<Control> labels, List<Control> buttons)
     {
-        foreach (var control in controlList)
-        {
-            control.Text = TextLoader.GetScriptList("UI");
-            Form1.Instance().Controls.Add(control);
-        }
+        PanelList = panels;
+        LabelList = labels;
+        ButtonList = buttons;
     }
     
     // 컨트롤 크기 및 위치 재설정
@@ -42,29 +38,37 @@ public class UIManager
         targetControl.Location = new Point(standardControl.Size.Width / 2 - targetControl.Size.Width / 2,
             targetControl.Location.Y);
     }
-    
-    // 패널 전환
-    public void SwitchControl(List<Control> controlList, Panel switchControl)
+
+    // 패널 반환
+    public Control GetPanel(string name)
     {
-        if (switchControl.GetType() == typeof(Panel))
+        foreach (var panel in PanelList)
         {
-            switchControl.Dock = DockStyle.Fill;
+            if (panel.Name == name)
+            {
+                return panel;
+            }
         }
         
-        switchControl.Visible = true;
-        switchControl.BringToFront();
-
-        foreach (var control in controlList)
+        throw new Exception("Panel not found");
+    }
+    
+    // 패널 전환
+    public void SwitchPanel(string name)
+    {
+        foreach (var panel in PanelList)
         {
-            if (control != switchControl)
+            if (panel.Name != name)
             {
-                control.Visible = false;
+                panel.Enabled = false;
+                panel.Visible = false;
+                continue;
             }
 
-            if (control.GetType() == typeof(Panel))
-            {
-                control.Dock = DockStyle.Fill;
-            }
+            panel.Enabled = true;
+            panel.Visible = true;
+            panel.Dock = DockStyle.Fill;
+            panel.BringToFront();
         }
     }
 }
