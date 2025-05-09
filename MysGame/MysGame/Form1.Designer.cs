@@ -49,10 +49,9 @@ partial class Form1
         homePanel.Controls.Add(home_loadGameButton);
         homePanel.Controls.Add(home_newGameButton);
         homePanel.Controls.Add(home_titleLabel);
-        homePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-        homePanel.Location = new System.Drawing.Point(0, 0);
+        homePanel.Location = new System.Drawing.Point(322, 46);
         homePanel.Name = "homePanel";
-        homePanel.Size = new System.Drawing.Size(524, 801);
+        homePanel.Size = new System.Drawing.Size(181, 207);
         homePanel.TabIndex = 0;
         // 
         // home_exitButton
@@ -123,7 +122,7 @@ partial class Form1
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         BackColor = System.Drawing.Color.DimGray;
-        ClientSize = new System.Drawing.Size(524, 801);
+        ClientSize = new System.Drawing.Size(884, 561);
         Controls.Add(homePanel);
         Controls.Add(gamePanel);
         Location = new System.Drawing.Point(15, 15);

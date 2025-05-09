@@ -1,7 +1,7 @@
 ﻿{
-  "home_titleLabel": "사건재구성",
-  "home_newGameButton": "새 게임",
-  "home_loadGameButton": "불러오기",
-  "home_settingButton": "설정",
-  "home_exitButton": "끝내기"
+  "titleLabel": "Truth is Lie",
+  "newGameButton": "새 게임",
+  "loadButton": "불러오기",
+  "settingButton": "설정",
+  "exitButton": "끝내기"
 }

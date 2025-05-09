@@ -7,13 +7,13 @@ namespace MysGame.data.script;
 public class GameManager
 {
     private StateLine _currentStateLine;
-    private readonly UIManager _uiManager;
     private readonly TextManager _textManager;
+    private readonly UIManager _uiManager;
 
-    public GameManager(Form form, Control textBox, List<Control> panels, List<Control> labels, List<Control> buttons)
+    public GameManager(Form form, Control textBox)
     {
-        _uiManager = new UIManager(panels, labels, buttons);
         _textManager = new TextManager(textBox);
+        _uiManager = new UIManager(form);
 
         ApplyUIText();
     }
@@ -33,12 +33,8 @@ public class GameManager
         switch (_currentStateLine)
         {
             case StateLine.Home:
-                _uiManager.SwitchPanel("homePanel");
                 break;
             case StateLine.Prologue:
-                _uiManager.SwitchPanel("gamePanel");
-                _uiManager.MoveControl(targetControl: _textManager.GetTextBox(), width: 400, height: 100, x: 0, y: 100);
-                _uiManager.UI_Horizontal_Centering(_uiManager.GetPanel("gamePanel"), targetControl: _textManager.GetTextBox());
                 _textManager.LoadTexts("Prologue");
                 _textManager.PrintText();
                 break;
