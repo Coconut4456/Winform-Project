@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("ColorBlock")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("MysGame")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+129e3528c012a3dfd2001adfe0f1eae35fc0b1e7")]
-[assembly: System.Reflection.AssemblyProductAttribute("ColorBlock")]
-[assembly: System.Reflection.AssemblyTitleAttribute("ColorBlock")]
+[assembly: System.Reflection.AssemblyProductAttribute("MysGame")]
+[assembly: System.Reflection.AssemblyTitleAttribute("MysGame")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
