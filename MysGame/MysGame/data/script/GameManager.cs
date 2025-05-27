@@ -1,4 +1,6 @@
-﻿using MysGame.data.script.text;
+﻿using System.Diagnostics.CodeAnalysis;
+using MysGame.data.resource.control;
+using MysGame.data.script.text;
 using MysGame.data.script.ui;
 using Newtonsoft.Json;
 
@@ -7,18 +9,15 @@ namespace MysGame.data.script;
 public class GameManager
 {
     private StateLine _currentStateLine;
-    private readonly TextManager _textManager;
-    private readonly UIManager _uiManager;
 
-    public GameManager(Form form, Control textBox)
+    public GameManager()
     {
-        _textManager = new TextManager(textBox);
-        _uiManager = new UIManager(form);
-
-        ApplyUIText();
     }
 
-    // 게임 상태 설정
+    /// <summary>
+    /// 현재 게임 상태 변경
+    /// </summary>
+    /// <param name="state"></param>
     public void SetState(string state)
     {
         if (Enum.TryParse(state, out StateLine stateLine))
@@ -29,36 +28,14 @@ public class GameManager
         {
             Console.WriteLine(@"Invalid state");
         }
-
-        switch (_currentStateLine)
-        {
-            case StateLine.Home:
-                break;
-            case StateLine.Prologue:
-                _textManager.LoadTexts("Prologue");
-                _textManager.PrintText();
-                break;
-        }
     }
 
-    // 컨트롤 텍스트에 ui.json 텍스트 할당
-    private void ApplyUIText()
+    /// <summary>
+    /// 현재 게임 상태값 반환
+    /// </summary>
+    /// <returns></returns>
+    public StateLine GetState()
     {
-        foreach (Control control in _uiManager.LabelList)
-        {
-            if (TextLoader.GetUIText(control.Name) == "") continue;
-            control.Text = TextLoader.GetUIText(control.Name);
-        }
-        foreach (Control control in _uiManager.ButtonList)
-        {
-            if (TextLoader.GetUIText(control.Name) == "") continue;
-            control.Text = TextLoader.GetUIText(control.Name);
-        }
-    }
-
-    // TextBox 출력
-    public void PrintText()
-    {
-        _textManager.PrintText();
+        return _currentStateLine;
     }
 }

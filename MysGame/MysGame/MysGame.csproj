@@ -17,14 +17,20 @@
     </ItemGroup>
     
     <ItemGroup>
-      <None Update="Data\Text\Kor\Narration.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-    
-    <ItemGroup>
       <Compile Update="data\resource\control\Home.cs">
         <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="data\resource\control\TextArea.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="data\resource\control\GameScreen.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="data\MainForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="data\Debug.cs">
+        <SubType>Form</SubType>
       </Compile>
     </ItemGroup>
 

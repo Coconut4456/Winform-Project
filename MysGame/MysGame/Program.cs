@@ -1,3 +1,8 @@
+using MysGame.data;
+using MysGame.data.script;
+using MysGame.data.script.text;
+using MysGame.data.script.ui;
+
 namespace MysGame;
 
 static class Program
@@ -9,6 +14,6 @@ static class Program
     static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
+        Application.Run(new MainForm(new GameManager(), new UIManager(), new TextManager()));
     }
 }

@@ -2,25 +2,21 @@
 
 public partial class Home : UserControl
 {
-    public Label TitleLabel => titleLabel;
-    public Button NewGameButton => newGameButton;
-    public Button LoadButton => loadButton;
-    public Button SettingButton => settingButton;
-    public Button ExitButton => exitButton;
-
-    private IEnumerable<Control> GetAllControls(Control control)
-    {
-        var controls = control.Controls.Cast<Control>();
-        return controls.SelectMany(c => GetAllControls(c)).Concat(controls);
-    }
+    // public event Action NewGameClicked;
+    public event Action<string>? ButtonClicked;
     
     public Home()
     {
         InitializeComponent();
-    }
-    
-    private void button1_Click(object sender, EventArgs e)
-    {
-        
+        this.Visible = false;
+        this.Location = new Point(0, 0);
+
+        foreach (Control control in Controls)
+        {
+            if (control is Button button)
+            {
+                button.Click += (s, e) => ButtonClicked?.Invoke(@$"{control.Name}");
+            }
+        }
     }
 }

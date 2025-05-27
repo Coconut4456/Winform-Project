@@ -1,4 +1,3 @@
-C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\Data\Text\kor.json
 C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\MysGame.exe
 C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\MysGame.deps.json
 C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\MysGame.runtimeconfig.json
@@ -6,7 +5,6 @@ C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\MysGame.dll
 C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\MysGame.pdb
 C:\.project\project_winform\MysGame\MysGame\bin\Debug\net9.0-windows\Newtonsoft.Json.dll
 C:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.csproj.AssemblyReference.cache
-C:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.Form1.resources
 C:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.csproj.GenerateResource.cache
 C:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.GeneratedMSBuildEditorConfig.editorconfig
 C:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.AssemblyInfoInputs.cache
@@ -39,3 +37,4 @@ Y:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\refint\MysG
 Y:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.pdb
 Y:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.genruntimeconfig.cache
 Y:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\ref\MysGame.dll
+C:\.project\project_winform\MysGame\MysGame\obj\Debug\net9.0-windows\MysGame.data.resource.control.Home.resources

@@ -50,7 +50,6 @@ partial class Home
         titleLabel.TabIndex = 0;
         titleLabel.Text = "truth is lie";
         titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        titleLabel.Visible = false;
         // 
         // newGameButton
         // 
@@ -65,9 +64,8 @@ partial class Home
         newGameButton.TabIndex = 1;
         newGameButton.Text = "NewGame";
         newGameButton.UseVisualStyleBackColor = false;
-        newGameButton.Click += button1_Click;
         // 
-        // LoadButton
+        // loadButton
         // 
         loadButton.BackColor = System.Drawing.Color.Transparent;
         loadButton.FlatAppearance.BorderSize = 0;
@@ -75,13 +73,13 @@ partial class Home
         loadButton.Font = new System.Drawing.Font("Ink Free", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
         loadButton.ForeColor = System.Drawing.Color.White;
         loadButton.Location = new System.Drawing.Point(12, 315);
-        loadButton.Name = "LoadButton";
+        loadButton.Name = "loadButton";
         loadButton.Size = new System.Drawing.Size(153, 44);
         loadButton.TabIndex = 2;
         loadButton.Text = "Load";
         loadButton.UseVisualStyleBackColor = false;
         // 
-        // SettingButton
+        // settingButton
         // 
         settingButton.BackColor = System.Drawing.Color.Transparent;
         settingButton.FlatAppearance.BorderSize = 0;
@@ -89,13 +87,13 @@ partial class Home
         settingButton.Font = new System.Drawing.Font("Ink Free", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
         settingButton.ForeColor = System.Drawing.Color.White;
         settingButton.Location = new System.Drawing.Point(12, 365);
-        settingButton.Name = "SettingButton";
+        settingButton.Name = "settingButton";
         settingButton.Size = new System.Drawing.Size(153, 44);
         settingButton.TabIndex = 3;
         settingButton.Text = "Setting";
         settingButton.UseVisualStyleBackColor = false;
         // 
-        // ExitButton
+        // exitButton
         // 
         exitButton.BackColor = System.Drawing.Color.Transparent;
         exitButton.FlatAppearance.BorderSize = 0;
@@ -103,7 +101,7 @@ partial class Home
         exitButton.Font = new System.Drawing.Font("Ink Free", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
         exitButton.ForeColor = System.Drawing.Color.White;
         exitButton.Location = new System.Drawing.Point(12, 415);
-        exitButton.Name = "ExitButton";
+        exitButton.Name = "exitButton";
         exitButton.Size = new System.Drawing.Size(153, 44);
         exitButton.TabIndex = 4;
         exitButton.Text = "Exit";
@@ -122,14 +120,14 @@ partial class Home
         Controls.Add(newGameButton);
         Controls.Add(titleLabel);
         Location = new System.Drawing.Point(15, 15);
-        Size = new System.Drawing.Size(900, 600);
+        Size = new System.Drawing.Size(1200, 760);
         ResumeLayout(false);
     }
 
-    private System.Windows.Forms.Button loadButton { get; set; }
-    private System.Windows.Forms.Button settingButton { get; set; }
-    private System.Windows.Forms.Button exitButton { get; set; }
     private System.Windows.Forms.Button newGameButton;
+    private System.Windows.Forms.Button loadButton;
+    private System.Windows.Forms.Button settingButton;
+    private System.Windows.Forms.Button exitButton;
     private System.Windows.Forms.Label titleLabel;
 
     #endregion
