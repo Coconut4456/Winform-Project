@@ -1,15 +1,67 @@
 ﻿using System.Net.Mime;
 using Microsoft.VisualBasic.ApplicationServices;
 using MysGame.data.resource.control;
+using Timer = System.Windows.Forms.Timer;
 
 namespace MysGame.data.script.ui;
 
 public class UIManager
 {
     private readonly Dictionary<string, UserControl> _controlMap = new();
+    private readonly Timer _typingTimer;
+    private List<char> _textCharList;
+    private int _printIndex;
     
     public UIManager()
     {
+        _typingTimer = new Timer();
+        _typingTimer.Tick += TypingTimer_Tick!;
+        _typingTimer.Interval = 100;
+        _textCharList = new List<char>();
+        _printIndex = 0;
+    }
+    
+    public bool IsTyping => _typingTimer.Enabled;
+
+    /// <summary>
+    ///  Char 리스트 초기화
+    /// </summary>
+    /// <param name="textCharList"></param>
+    public void SetCharList(List<Char> textCharList)
+    {
+        if (_typingTimer.Enabled)
+            return;
+        
+        _textCharList = textCharList;
+    }
+
+    /// <summary>
+    ///  텍스트 출력
+    /// </summary>
+    public void TypingTimerStart()
+    {
+        _printIndex = 0;
+        _controlMap["TextArea"].Controls["TextLabel"].Text = "";
+        _typingTimer.Start();
+    }
+    
+    
+    /// <summary>
+    /// 타이핑 애니메이션 타이머
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void TypingTimer_Tick(object sender, EventArgs e)
+    {
+        if (_textCharList.Count <= _printIndex)
+        {
+            _printIndex = 0;
+            _typingTimer.Stop();
+            return;
+        }
+        
+        _controlMap["TextArea"].Controls["TextLabel"].Text += _textCharList[_printIndex];
+        _printIndex++;
     }
 
     /// <summary>
@@ -35,10 +87,8 @@ public class UIManager
         {
             return (_controlMap[name] as T)!;
         }
-        else
-        {
-            throw new NullReferenceException("control is not of type " + typeof(T));
-        }
+        
+        throw new NullReferenceException("control is not of type " + typeof(T));
     }
 
     /// <summary>
@@ -56,7 +106,6 @@ public class UIManager
     public void TextBoxShow()
     {
         Control textArea = _controlMap["TextArea"];
-        textArea.Controls["TextLabel"]!.Dock = DockStyle.Fill;
         textArea.BringToFront();
         textArea.Visible = true;
     }

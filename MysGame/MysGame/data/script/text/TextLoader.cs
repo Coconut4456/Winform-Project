@@ -8,13 +8,17 @@ public static class TextLoader
     private static readonly Dictionary<string, List<string>> ScriptDic = new();
     private static readonly Dictionary<string, string> UITextDic = new();
     
-    // 텍스트 불러오기
+    /// <summary>
+    /// json 파일 불러오기
+    /// </summary>
+    /// <param name="narrationPath"></param>
+    /// <param name="dialoguePath"></param>
+    /// <param name="uiPath"></param>
     public static void LoadTexts(string narrationPath, string dialoguePath, string uiPath)
     {
         ScriptDic.Clear();
         UITextDic.Clear();
-    
-        // Narration 불러오기
+        
         if (File.Exists(narrationPath))
         {
             string narrationJson = File.ReadAllText(narrationPath);
@@ -25,8 +29,7 @@ public static class TextLoader
                     ScriptDic[kv.Key] = kv.Value;
             }
         }
-    
-        // Dialogue 불러오기
+        
         if (File.Exists(dialoguePath))
         {
             string dialogueJson = File.ReadAllText(dialoguePath);
@@ -38,7 +41,6 @@ public static class TextLoader
             }
         }
         
-        // UI 불러오기
         if (File.Exists(uiPath))
         {
             string json = File.ReadAllText(uiPath);
@@ -51,11 +53,21 @@ public static class TextLoader
         }
     }
     
+    /// <summary>
+    /// 문장 리스트 반환
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static List<string> GetScriptList(string key)
     {
         return ScriptDic.TryGetValue(key, out var list) ? list : new();
     }
     
+    /// <summary>
+    /// UI 텍스트 반환
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public static string GetUIText(string key)
     {
         return UITextDic.TryGetValue(key, out var value) ? value : "";

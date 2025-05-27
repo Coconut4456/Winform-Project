@@ -7,6 +7,7 @@ public partial class TextArea : UserControl
         InitializeComponent();
         this.Visible = false;
         this.Location = new Point(0, 0);
+        textLabel.Dock = DockStyle.Fill;
         textLabel.Text = string.Empty;
         textLabel.TextAlign = ContentAlignment.MiddleCenter;
         textLabel.BackColor = Color.Black;

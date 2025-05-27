@@ -27,9 +27,6 @@ public partial class MainForm : Form
         _uiManager.Register("Home", new Home());
         _uiManager.Register("GameScreen", new GameScreen());
         
-        // TextBox 할당
-        _textManager.SetTextBox(_uiManager.GetControl<TextArea>("TextArea").Controls["TextLabel"]!);
-        
         // 초기 언어 설정
         ApplyUIText("ko");
         
@@ -54,6 +51,7 @@ public partial class MainForm : Form
         
         // 초기 홈 화면 전환
         _uiManager.SwitchUI("Home");
+        // _debugForm.SetClientSize();
         _debugForm.Show();
     }
 
@@ -67,7 +65,7 @@ public partial class MainForm : Form
         switch (e.KeyCode)
         {
             case Keys.Space:
-                _textManager.PrintText();
+                PrintText();
                 break;
             case Keys.PageUp:
                 _debugForm.Visible = !_debugForm.Visible;
@@ -91,13 +89,26 @@ public partial class MainForm : Form
                 _uiManager.HorizontalAlignment("GameScreen", "TextBox");
                 _uiManager.VerticalAlignment("GameScreen", "TextBox");
                 _uiManager.TextBoxShow();
-                _textManager.LoadScriptTexts(_gameManager.GetState().ToString());
-                _textManager.PrintText();
+                _textManager.LoadScriptTexts("Prologue");
+                PrintText();
                 break;
             case "exitButton": 
                 Application.Exit();
                 break;
         }
+    }
+
+    /// <summary>
+    /// 현재 메시지 출력
+    /// </summary>
+    private void PrintText()
+    {
+        if (_uiManager.IsTyping)
+            return;
+        
+        List<char> charList = _textManager.GetSplitText();
+        _uiManager.SetCharList(charList);
+        _uiManager.TypingTimerStart();
     }
 
     /// <summary>
