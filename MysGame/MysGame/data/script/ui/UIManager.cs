@@ -8,62 +8,11 @@ namespace MysGame.data.script.ui;
 public class UIManager
 {
     private readonly Dictionary<string, UserControl> _controlMap = new();
-    private readonly Timer _typingTimer;
-    private List<char> _textCharList;
-    private int _printIndex;
     
     public UIManager()
     {
-        _typingTimer = new Timer();
-        _typingTimer.Tick += TypingTimer_Tick!;
-        _typingTimer.Interval = 100;
-        _textCharList = new List<char>();
-        _printIndex = 0;
     }
     
-    public bool IsTyping => _typingTimer.Enabled;
-
-    /// <summary>
-    ///  Char 리스트 초기화
-    /// </summary>
-    /// <param name="textCharList"></param>
-    public void SetCharList(List<Char> textCharList)
-    {
-        if (_typingTimer.Enabled)
-            return;
-        
-        _textCharList = textCharList;
-    }
-
-    /// <summary>
-    ///  텍스트 출력
-    /// </summary>
-    public void TypingTimerStart()
-    {
-        _printIndex = 0;
-        _controlMap["TextArea"].Controls["TextLabel"].Text = "";
-        _typingTimer.Start();
-    }
-    
-    
-    /// <summary>
-    /// 타이핑 애니메이션 타이머
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void TypingTimer_Tick(object sender, EventArgs e)
-    {
-        if (_textCharList.Count <= _printIndex)
-        {
-            _printIndex = 0;
-            _typingTimer.Stop();
-            return;
-        }
-        
-        _controlMap["TextArea"].Controls["TextLabel"].Text += _textCharList[_printIndex];
-        _printIndex++;
-    }
-
     /// <summary>
     /// 맵에 key와 컨트롤을 매핑
     /// </summary>
@@ -101,9 +50,17 @@ public class UIManager
     }
 
     /// <summary>
+    /// TextArea 크기 조정
+    /// </summary>
+    public void SetTextAreaSize(int width, int height)
+    {
+        _controlMap["TextArea"].Size = new Size(width, height);
+    }
+
+    /// <summary>
     /// TextArea 보이기
     /// </summary>
-    public void TextBoxShow()
+    public void TextAreaShow()
     {
         Control textArea = _controlMap["TextArea"];
         textArea.BringToFront();
@@ -113,18 +70,22 @@ public class UIManager
     /// <summary>
     /// TextArea 숨기기
     /// </summary>
-    public void TextBoxHide()
+    public void TextAreaHide()
     {
         _controlMap["TextArea"].Visible = false;
     }
 
     /// <summary>
-    /// key에 해당하는 컨트롤 탐색
-    /// 해당 컨트롤 DockStyle.Fill, BringtoFront, Visible = true
+    /// 모든 컨트롤 숨김, 해당 컨트롤 보이기
     /// </summary>
     /// <param name="key"></param>
     public void SwitchUI(string key)
     {
+        foreach (var userControl in _controlMap)
+        {
+            userControl.Value.Visible = false;
+        }
+        
         // 컨트롤 찾아서 control 변수에 할당
         if (!_controlMap.TryGetValue(key, out var control))
             return;
@@ -147,50 +108,18 @@ public class UIManager
     /// <summary>
     /// 컨트롤 수평 정렬
     /// </summary>
-    public void HorizontalAlignment(string baseControl, string targetControl)
+    public void HorizontalAlignment(Control baseControl, Control targetControl)
     {
-        Control control;
-        Control userControl = _controlMap[baseControl];
-
-        if (targetControl == "TextBox")
-        {
-            control = _controlMap["TextArea"].Controls["TextLabel"]!;
-        }
-        else if (_controlMap[baseControl].Controls[targetControl] != null)
-        {
-            control = _controlMap[baseControl].Controls[targetControl]!;
-        }
-        else
-        {
-            throw new NullReferenceException("control is not found");
-        }
-
-        int currentX = userControl.Size.Width / 2 - control.Size.Width / 2;
-        control.Location = new Point(currentX, control.Location.Y);
+        int currentX = baseControl.Size.Width / 2 - targetControl.Size.Width / 2;
+        targetControl.Location = new Point(currentX, targetControl.Location.Y);
     }
 
     /// <summary>
     /// 컨트롤 수직 정렬
     /// </summary>
-    public void VerticalAlignment(string baseControl, string targetControl)
+    public void VerticalAlignment(Control baseControl, Control targetControl)
     {
-        Control control;
-        Control userControl = _controlMap[baseControl];
-
-        if (targetControl == "TextBox")
-        {
-            control = _controlMap["TextArea"].Controls["TextLabel"]!;
-        }
-        else if (_controlMap[baseControl].Controls[targetControl] != null)
-        {
-            control = _controlMap[baseControl].Controls[targetControl]!;
-        }
-        else
-        {
-            throw new NullReferenceException("control is not found");
-        }
-        
-        int currentY = userControl.Size.Height / 2 - control.Size.Height / 2;
-        control.Location = new Point(control.Location.X, currentY);
+        int currentY = baseControl.Size.Height / 2 - targetControl.Size.Height / 2;
+        targetControl.Location = new Point(targetControl.Location.X, currentY);
     }
 }

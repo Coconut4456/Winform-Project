@@ -41,7 +41,7 @@ public partial class Debug : Form
     /// 데이터 그리드 생성 및 초기화 (컨트롤 값과 항목 추가)
     /// </summary>
     /// <param name="userControl"></param>
-    public void LoadControl(UserControl userControl)
+    public void LoadControl(Control userControl)
     {
         Label userControlName = new Label();
         userControlName.Text = userControl.GetType().Name;

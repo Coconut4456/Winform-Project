@@ -14,6 +14,6 @@ static class Program
     static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm(new GameManager(), new UIManager(), new TextManager()));
+        Application.Run(new MainForm(new GameManager(new UIManager(),  new TextManager()), new Debug()));
     }
 }
