@@ -21,6 +21,12 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
+      <Compile Update="resource\Home.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="resource\GameScreen.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
