@@ -5,6 +5,7 @@ namespace KnightsJourney;
 
 public partial class Form1 : Form
 {
+    private List<Control> _mainControls;
     private List<Control> _gamelabels;
     private int _blockNum;
     private readonly int _formWidth;
@@ -25,10 +26,12 @@ public partial class Form1 : Form
     private Label _playTimeLabel;
     private float _playTime;
     private int _timeCount;
+    private Color _labelColor;
     
     public Form1()
     {
         InitializeComponent();
+        _mainControls = new List<Control>();
         _gamelabels = new List<Control>();
         _redoStack = new Stack<Control>();
         _undoStack = new Stack<Control>();
@@ -51,6 +54,7 @@ public partial class Form1 : Form
         _gameTimer.Interval = 100;
         _gameTimer.Tick += Timer_Tick!;
         _playTime = 30.00f;
+        _labelColor = Color.White;
 
         AddButton(5, 9);
     }
@@ -59,10 +63,12 @@ public partial class Form1 : Form
     {
         _formTotalX = (_blockNum * _labelWidth) + (_blockNum * 5) + 5;
         _formTotalY = (_blockNum * _labelHeight) + (_blockNum * 5) + 5;
-        HideCurrentAllControl();
+        HideMain();
         AddLabel();
         AddUI();
         this.ClientSize = new Size(_formTotalX, _formTotalY);
+        _playTime = 30.00f;
+        _timeCount = 0;
         _gameTimer.Start();
     }
 
@@ -70,27 +76,39 @@ public partial class Form1 : Form
     {
         Button button1 = new Button();
         button1.Size = new Size(_buttonWidth, _buttonHeight);
-        button1.Location = new Point(_formTotalX, _formTotalY - button1.Height - 5);
+        button1.Location = new Point(_formTotalX, _formTotalY - (button1.Height * 2) - 10);
         button1.ForeColor = Color.White;
-        button1.Text = "←";
+        button1.Text = @"←";
         button1.Click += Button_Click!;
         button1.Tag = "Redo";
         this.Controls.Add(button1);
         
         Button button2 = new Button();
         button2.Size = button1.Size;
-        button2.Location = new Point(button1.Location.X + button1.Width + 5, _formTotalY - button2.Height - 5);
+        button2.Location = new Point(button1.Location.X + button1.Width + 5, _formTotalY - (button2.Height * 2) - 10);
         button2.ForeColor = Color.White;
-        button2.Text = "→";
+        button2.Text = @"→";
         button2.Click += Button_Click!;
         button2.Tag = "Undo";
         this.Controls.Add(button2);
         
-        PictureBox pictureBox1 = new PictureBox();
-        pictureBox1.Size = new Size(_labelWidth, _labelHeight);
-        pictureBox1.Image = Image.FromFile(@"Resources\Knight1.png");
-        pictureBox1.Visible = false;
-        this.Controls.Add(pictureBox1);
+        Button button3 = new Button();
+        button3.Size = new Size(button1.Width, button1.Height);
+        button3.Location = new Point(_formTotalX, _formTotalY - button1.Height - 5);
+        button3.ForeColor = Color.White;
+        button3.Text = @"초기화";
+        button3.Click += Button_Click!;
+        button3.Tag = "Reset";
+        this.Controls.Add(button3);
+        
+        Button button4 = new Button();
+        button4.Size = new Size(button1.Width, button1.Height);
+        button4.Location = new Point(button1.Location.X + button1.Width + 5, _formTotalY + button1.Height - 5);
+        button4.ForeColor = Color.White;
+        button4.Text = @"처음으로";
+        button4.Click += Button_Click!;
+        button4.Tag = "Return";
+        this.Controls.Add(button4);
 
         _playTimeLabel.BackColor = Color.Black;
         _playTimeLabel.ForeColor = Color.White;
@@ -138,19 +156,18 @@ public partial class Form1 : Form
             return;
                     
         Control currentLabel = _redoStack.Pop();
-        currentLabel.BackColor = Color.White;
+        currentLabel.BackgroundImage = null;
+        currentLabel.BackColor = _labelColor;
         currentLabel.Text = "";
         currentLabel.Tag = 0;
         _undoStack.Push(currentLabel);
         _currentNum--;
-                    
+        
         if (_redoStack.Count != 0)
         {
             Control control = _redoStack.Peek();
-            control.BackColor = Color.Green;
-            Control pictureBox = this.Controls["pictureBox1"]!;
-            pictureBox.Location = new Point(control.Location.X, control.Location.Y);
-            pictureBox.Visible = true;
+            control.BackColor = Color.LimeGreen;
+            control.BackgroundImage = Image.FromFile(@"Resources\Knight1.png");
         }
     }
 
@@ -165,23 +182,18 @@ public partial class Form1 : Form
         
         if (_redoStack.Count != 0)
         {
-            _redoStack.Peek().BackColor = Color.CornflowerBlue;
+            Control control = _redoStack.Peek();
+            control.BackColor = Color.LimeGreen;
+            control.BackgroundImage = null;
         }
         
         Control currentLabel = _undoStack.Pop();
-        currentLabel.BackColor = Color.Green;
+        currentLabel.BackgroundImage = Image.FromFile(@"Resources\Knight1.png");
+        currentLabel.BackColor = Color.LimeGreen;
         currentLabel.Text = _currentNum.ToString();
         currentLabel.Tag = 1;
-        Control pictureBox = this.Controls["pictureBox1"]!;
-        pictureBox.Location = new Point(currentLabel.Location.X, currentLabel.Location.Y);
-        pictureBox.Visible = true;
         _redoStack.Push(currentLabel);
         _currentNum++;
-
-        if (_undoStack.Count != 0)
-        {
-            _undoStack.Peek().BackColor = Color.White;
-        }
     }
 
     /// <summary>
@@ -193,14 +205,17 @@ public partial class Form1 : Form
     {
         // index = 말을 이동시킬 위치
         int currentIndex = _gamelabels.IndexOf(_redoStack.Peek()); // 현재 말 위치
+        List<List<int>> gameIndex = [
+            [3, 7, 9, 11], [4, 8, 11, 13], [5, 9, 13, 15], [6, 10, 15, 17], [7, 12, 17, 19]];
 
-        if (index == currentIndex - 3 || index == currentIndex - 7 || index == currentIndex - 9 ||
-            index == currentIndex - 11 || index == currentIndex + 3 || index == currentIndex + 7 ||
-            index == currentIndex + 9 || index == currentIndex + 11)
+        foreach (var i in gameIndex[_blockNum - 5])
         {
-            return true;
+            if (index == currentIndex - i || index == currentIndex + i)
+            {
+                return true;
+            }
         }
-        
+
         return false;
     }
 
@@ -224,12 +239,12 @@ public partial class Form1 : Form
             case 0:
                 if (_redoStack.Count != 0)
                 {
-                    _redoStack.Peek().BackColor = Color.CornflowerBlue;
+                    Control control = _redoStack.Peek();
+                    control.BackColor = Color.LimeGreen;
+                    control.BackgroundImage = null;
                 }
                 
-                // Control pictureBox = this.Controls["pictureBox1"]!;
-                // pictureBox.Location = new Point(label.Location.X, label.Location.Y);
-                // pictureBox.Visible = true;
+                label.BackgroundImage = Image.FromFile(@"Resources\Knight1.png");
                 label.BackColor = Color.Green;
                 label.Text = _currentNum.ToString();
                 label.Tag = 1;
@@ -239,7 +254,7 @@ public partial class Form1 : Form
             case 1:
                 if (label.Text != (_currentNum - 1).ToString()) 
                     return;
-                    
+                
                 Redo();
                 break;
         }
@@ -308,16 +323,36 @@ public partial class Form1 : Form
             case "Undo":
                 Undo();
                 break;
+            case "Reset":
+                _gameTimer.Stop();
+                ShowMain();
+                break;
         }
+    }
+
+    private void ShowMain()
+    {
+        foreach (Control control in Controls)
+        {
+            control.Visible = true;
+        }
+
+        foreach (var control in _gamelabels)
+        {
+            this.Controls.Remove(control);
+        }
+        
+        _mainControls.Clear();
     }
 
     /// <summary>
     /// 현재 모든 컨트롤 숨김
     /// </summary>
-    private void HideCurrentAllControl()
+    private void HideMain()
     {
         foreach (Control control in Controls)
         {
+            _mainControls.Add(control);
             control.Visible = false;
         }
     }
@@ -334,7 +369,7 @@ public partial class Form1 : Form
                 Label label = new Label();
                 label.Size = new Size(_labelWidth, _labelHeight);
                 label.Location = new Point((j * label.Size.Width) + (j * 5) + 5, (i * label.Size.Height) + (i * 5) + 5);
-                label.BackColor = Color.LightGray;
+                label.BackColor = _labelColor;
                 label.BorderStyle = BorderStyle.FixedSingle;
                 label.Font = new Font(FontFamily.GenericSansSerif, 14);
                 label.TextAlign = ContentAlignment.MiddleCenter;
