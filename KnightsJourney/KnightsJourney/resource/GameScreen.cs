@@ -19,6 +19,7 @@ public partial class GameScreen : UserControl
     private int _totalX;
     private int _totalY;
     private Size _totalSize;
+    private bool _moveFailed;
     
     public GameScreen()
     {
@@ -35,9 +36,9 @@ public partial class GameScreen : UserControl
         _labelWidth = 100;
         _labelHeight = 100;
         _labelColor = Color.White;
-        
-        _gameTimer.Interval = 100;
-        _gameTimer.Tick += Timer_Tick!;
+
+        _gameTimer.Interval = 1000;
+        _gameTimer.Tick += GameTimer_Tick!;
         _currentNum = 1;
     }
 
@@ -48,18 +49,17 @@ public partial class GameScreen : UserControl
     {
         _gameTimer.Stop();
         this.Visible = true;
-        _playTime = 1200;
 
         while (_redoStack.Count != 0)
         {
             Redo();
         }
-        
+
+        _currentNum = 0;
         _redoStack.Clear();
         _undoStack.Clear();
         this.Controls["RedoButton"]!.Visible = false;
         this.Controls["UndoButton"]!.Visible = false;
-        _gameTimer.Start();
     }
 
     /// <summary>
@@ -71,6 +71,20 @@ public partial class GameScreen : UserControl
         this.Visible = false;
         _redoStack.Clear();
         _undoStack.Clear();
+        _currentNum = 0;
+    }
+
+    /// <summary>
+    /// 타임어택 활성화 여부 확인
+    /// </summary>
+    /// <param name="checkTimeAttack"></param>
+    public void CheckTimeAttack(bool checkTimeAttack)
+    {
+        if (!checkTimeAttack)
+            return;
+        
+        _gameTimer.Start();
+        _playTime = 1200;
     }
     
     public Size GetTotalSize() => _totalSize;
@@ -91,7 +105,7 @@ public partial class GameScreen : UserControl
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void Timer_Tick(object sender, EventArgs e)
+    private void GameTimer_Tick(object sender, EventArgs e)
     {
         if (_playTime <= 0)
         {
@@ -103,6 +117,12 @@ public partial class GameScreen : UserControl
         
         _playTime--;
         this.Controls["TimeLabel"]!.Text = _playTime.ToString();
+
+        if (!_moveFailed) 
+            return;
+
+        this.Controls["TimeLabel"]!.Text = _playTime + "\n-10";
+        _moveFailed = false;
     }
 
     /// <summary>
@@ -186,6 +206,7 @@ public partial class GameScreen : UserControl
             }
         }
 
+        _moveFailed = true;
         _playTime -= 10;
         return false;
     }
@@ -262,18 +283,18 @@ public partial class GameScreen : UserControl
         button4.Tag = "Return";
         this.Controls.Add(button4);
         
-        Label label = new Label();
-        label.Name = "TimeLabel";
-        label.BackColor = Color.Black;
-        label.ForeColor = Color.White;
-        label.BorderStyle = BorderStyle.FixedSingle;
-        label.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold);
-        label.TextAlign = ContentAlignment.MiddleCenter;
-        label.Size = new Size(button1.Width + button2.Width + 5, button1.Height);
-        label.Location = new Point(_totalX, 5);
-        label.Text = "";
-        label.Tag = "TimeLabel";
-        this.Controls.Add(label);
+        Label label1 = new Label();
+        label1.Name = "TimeLabel";
+        label1.BackColor = Color.Black;
+        label1.ForeColor = Color.White;
+        label1.BorderStyle = BorderStyle.FixedSingle;
+        label1.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold);
+        label1.TextAlign = ContentAlignment.MiddleCenter;
+        label1.Size = new Size(button1.Width + button2.Width + 5, button1.Height);
+        label1.Location = new Point(_totalX, 5);
+        label1.Text = "";
+        label1.Tag = "TimeLabel";
+        this.Controls.Add(label1);
 
         _totalSize = new Size(_totalX + (button1.Width + button2.Width + 25), _totalY + 40);
     }
@@ -302,12 +323,21 @@ public partial class GameScreen : UserControl
                     control.BackColor = Color.LimeGreen;
                     control.BackgroundImage = null;
                 }
-                
+
+                _currentNum++;
                 label.BackgroundImage = Image.FromFile(@"Resources\Knight1.png");
                 label.BackColor = Color.Green;
                 label.Text = _currentNum.ToString();
                 label.Tag = 1;
-                _currentNum++;
+
+                // 모든 말을 놓았다면 게임 종료
+                if (_currentNum >= _blockNum * _blockNum)
+                {
+                    MessageBox.Show(@"여행이 끝났습니다!");
+                    OnButtonClick!.Invoke("Return");
+                    return;
+                }
+                
                 _redoStack.Push(label);
                 
                 if (_redoStack.Count > 0)

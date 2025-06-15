@@ -1,0 +1,15 @@
+C:\.project\project_winform\RedHorizon1\RedHorizon1\bin\Debug\net9.0-windows\RedHorizon1.exe
+C:\.project\project_winform\RedHorizon1\RedHorizon1\bin\Debug\net9.0-windows\RedHorizon1.deps.json
+C:\.project\project_winform\RedHorizon1\RedHorizon1\bin\Debug\net9.0-windows\RedHorizon1.runtimeconfig.json
+C:\.project\project_winform\RedHorizon1\RedHorizon1\bin\Debug\net9.0-windows\RedHorizon1.dll
+C:\.project\project_winform\RedHorizon1\RedHorizon1\bin\Debug\net9.0-windows\RedHorizon1.pdb
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.GeneratedMSBuildEditorConfig.editorconfig
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.AssemblyInfoInputs.cache
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.AssemblyInfo.cs
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.csproj.CoreCompileInputs.cache
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.sourcelink.json
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.dll
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\refint\RedHorizon1.dll
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.pdb
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\RedHorizon1.genruntimeconfig.cache
+C:\.project\project_winform\RedHorizon1\RedHorizon1\obj\Debug\net9.0-windows\ref\RedHorizon1.dll

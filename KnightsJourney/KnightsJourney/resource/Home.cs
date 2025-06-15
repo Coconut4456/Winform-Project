@@ -8,6 +8,7 @@ public partial class Home : UserControl
     private int _margin;
     private readonly int _buttonWidth;
     private readonly int _buttonHeight;
+    public bool TimeAttackChecked;
     
     public Home()
     {
@@ -20,6 +21,20 @@ public partial class Home : UserControl
         this.Visible = true;
         _buttonWidth = 100;
         _buttonHeight = 100;
+        TimeAttackChecked = false;
+        
+        CheckBox checkBox = new CheckBox();
+        checkBox.Size = new Size(this.Width, 40);
+        checkBox.Location = new Point(0, 0);
+        checkBox.Text = @"타임어택 활성화";
+        checkBox.ForeColor = Color.White;
+        checkBox.BackColor = Color.Black;
+        checkBox.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold);
+        checkBox.TextAlign = ContentAlignment.MiddleCenter;
+        checkBox.CheckAlign = ContentAlignment.BottomCenter;
+        checkBox.Dock = DockStyle.Top;
+        checkBox.CheckedChanged += (sender, args) => { TimeAttackChecked = !TimeAttackChecked; };
+        this.Controls.Add(checkBox);
         
         Label label = new Label();
         label.Size = new Size(this.Width, 100);
@@ -46,7 +61,7 @@ public partial class Home : UserControl
     /// </summary>
     /// <param name="min"></param>
     /// <param name="max"></param>
-    public void AddButton(int min, int max)
+    public void AddGameButton(int min, int max)
     {
         _buttonCount = max - min + 1;
         _spacePerButton = this.Width / _buttonCount;

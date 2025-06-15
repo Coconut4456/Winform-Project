@@ -23,7 +23,7 @@ public partial class Form1 : Form
         this.Controls.Add(gameScreen);
         
         ReSize();
-        home.AddButton(5, 9);
+        home.AddGameButton(5, 9);
     }
 
     /// <summary>
@@ -40,14 +40,22 @@ public partial class Form1 : Form
     private void GameStart()
     {
         Home? home = Controls["Home"] as Home;
-        home?.SetVisible();
         GameScreen? gameScreen = Controls["GameScreen"] as GameScreen;
-        gameScreen?.Controls.Clear();
-        gameScreen?.AddLabel();
-        gameScreen?.AddUI();
+
+        if (home == null)
+            return;
+
+        if (gameScreen == null)
+            return;
+        
+        home.SetVisible();
+        gameScreen.Controls.Clear();
+        gameScreen.AddLabel();
+        gameScreen.AddUI();
         this.Size = gameScreen.GetTotalSize();
         this.StartPosition = FormStartPosition.CenterScreen;
-        gameScreen?.GameStart();
+        gameScreen.GameStart();
+        gameScreen.CheckTimeAttack(home.TimeAttackChecked);
     }
     
     /// <summary>
@@ -73,40 +81,46 @@ public partial class Form1 : Form
     {
         Home? home = Controls["Home"] as Home;
         GameScreen? gameScreen = Controls["GameScreen"] as GameScreen;
+
+        if (home == null)
+            return;
+
+        if (gameScreen == null)
+            return;
         
         switch (tag)
         {
             case "Start1":
-                gameScreen?.SetBlockNum(5);
+                gameScreen.SetBlockNum(5);
                 GameStart();
                 break;
             case "Start2":
-                gameScreen?.SetBlockNum(6);
+                gameScreen.SetBlockNum(6);
                 GameStart();
                 break;
             case "Start3":
-                gameScreen?.SetBlockNum(7);
+                gameScreen.SetBlockNum(7);
                 GameStart();
                 break;
             case "Start4":
-                gameScreen?.SetBlockNum(8);
+                gameScreen.SetBlockNum(8);
                 GameStart();
                 break;
             case "Start5":
-                gameScreen?.SetBlockNum(9);
+                gameScreen.SetBlockNum(9);
                 GameStart();
                 break;
             case "Redo":
-                gameScreen?.Redo();
+                gameScreen.Redo();
                 break;
             case "Undo":
-                gameScreen?.Undo();
+                gameScreen.Undo();
                 break;
             case "Reset":
-                gameScreen?.GameStart();
+                gameScreen.GameStart();
                 break;
             case "Return":
-                gameScreen?.GameStop();
+                gameScreen.GameStop();
                 ReSize();
                 home.Visible = true;
                 break;
