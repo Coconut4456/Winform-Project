@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj": {}
+    "C:\\Users\\PC\\Documents\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj": {}
   },
   "projects": {
-    "C:\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj": {
+    "C:\\Users\\PC\\Documents\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Documents\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj",
         "projectName": "KnightsJourney",
-        "projectPath": "C:\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\obj\\",
+        "projectPath": "C:\\Users\\PC\\Documents\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\KnightsJourney.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC\\Documents\\.project\\project_winform\\KnightsJourney\\KnightsJourney\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0-windows"
@@ -36,9 +36,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0-windows7.0": {
@@ -62,7 +62,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\ASUS\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

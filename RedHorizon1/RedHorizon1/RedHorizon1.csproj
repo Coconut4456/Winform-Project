@@ -2,10 +2,20 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net9.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Update="data\script\controls\GameScreen.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="data\script\unit\" />
+    </ItemGroup>
 
 </Project>

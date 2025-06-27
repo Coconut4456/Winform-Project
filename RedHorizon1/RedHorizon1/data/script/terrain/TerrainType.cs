@@ -1,4 +1,4 @@
-﻿namespace RedHorizon1.data.script.entity;
+﻿namespace RedHorizon1.data.script.terrain;
 
 public enum TerrainType
 {

@@ -1,29 +1,28 @@
 using RedHorizon1.data.script;
+using RedHorizon1.data.script.config;
 
 namespace RedHorizon1;
 
 public partial class Form1 : Form
 {
-    private GameManager _gameManager;
-    private TileManager _tileManager;
+    private readonly GameManager _gameManager = new GameManager(new TileManager(), new UIManager(), new UnitManager());
     
     public Form1()
     {
         InitializeComponent();
 
-        this.ClientSize = new Size(1400, 860);
+        this.ClientSize = new Size(GameConfig.ClientSizeX, GameConfig.ClientSizeY);
         this.StartPosition = FormStartPosition.CenterScreen;
 
-        _gameManager = new GameManager();
-        _tileManager = new TileManager();
+        _gameManager.InitializeGame(GameConfig.TileX, GameConfig.TileY);
+        
+        foreach (var control in _gameManager.GetScreenList())
+        {
+            this.Controls.Add(control);
+        }
     }
 
-    /// <summary>
-    /// 수평 중앙 정렬 메서드 (메인 폼 기준)
-    /// </summary>
-    /// <param name="targetX"></param>
-    /// <returns></returns>
-    private int HorizontalAlignment(Control target)
+    private int HorizontalAlignment(Control target) // 메인 화면으로 옮겨야댐
     {
         return ClientSize.Width / 2 - target.Size.Width / 2;
     }
