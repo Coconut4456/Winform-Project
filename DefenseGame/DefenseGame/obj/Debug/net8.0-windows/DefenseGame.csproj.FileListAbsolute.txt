@@ -1,0 +1,15 @@
+C:\.project\project_winform\DefenseGame\DefenseGame\bin\Debug\net8.0-windows\DefenseGame.exe
+C:\.project\project_winform\DefenseGame\DefenseGame\bin\Debug\net8.0-windows\DefenseGame.deps.json
+C:\.project\project_winform\DefenseGame\DefenseGame\bin\Debug\net8.0-windows\DefenseGame.runtimeconfig.json
+C:\.project\project_winform\DefenseGame\DefenseGame\bin\Debug\net8.0-windows\DefenseGame.dll
+C:\.project\project_winform\DefenseGame\DefenseGame\bin\Debug\net8.0-windows\DefenseGame.pdb
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.GeneratedMSBuildEditorConfig.editorconfig
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.AssemblyInfoInputs.cache
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.AssemblyInfo.cs
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.csproj.CoreCompileInputs.cache
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.sourcelink.json
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.dll
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\refint\DefenseGame.dll
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.pdb
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\DefenseGame.genruntimeconfig.cache
+C:\.project\project_winform\DefenseGame\DefenseGame\obj\Debug\net8.0-windows\ref\DefenseGame.dll
