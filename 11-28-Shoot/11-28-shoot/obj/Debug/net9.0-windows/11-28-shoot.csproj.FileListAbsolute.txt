@@ -1,0 +1,14 @@
+C:\.project\etc\11-28-shoot\11-28-shoot\bin\Debug\net9.0-windows\11-28-shoot.exe
+C:\.project\etc\11-28-shoot\11-28-shoot\bin\Debug\net9.0-windows\11-28-shoot.deps.json
+C:\.project\etc\11-28-shoot\11-28-shoot\bin\Debug\net9.0-windows\11-28-shoot.runtimeconfig.json
+C:\.project\etc\11-28-shoot\11-28-shoot\bin\Debug\net9.0-windows\11-28-shoot.dll
+C:\.project\etc\11-28-shoot\11-28-shoot\bin\Debug\net9.0-windows\11-28-shoot.pdb
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.GeneratedMSBuildEditorConfig.editorconfig
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.AssemblyInfoInputs.cache
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.AssemblyInfo.cs
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.csproj.CoreCompileInputs.cache
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.dll
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\refint\11-28-shoot.dll
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.pdb
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\11-28-shoot.genruntimeconfig.cache
+C:\.project\etc\11-28-shoot\11-28-shoot\obj\Debug\net9.0-windows\ref\11-28-shoot.dll
