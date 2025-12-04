@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\.project\\etc\\11-28-shoot\\11-28-shoot\\11-28-shoot.csproj",
+      "projectUniqueName": "C:\\.project\\WinForm-Project\\11-28-Shoot\\11-28-shoot\\11-28-shoot.csproj",
       "projectName": "11-28-shoot",
-      "projectPath": "C:\\.project\\etc\\11-28-shoot\\11-28-shoot\\11-28-shoot.csproj",
+      "projectPath": "C:\\.project\\WinForm-Project\\11-28-Shoot\\11-28-shoot\\11-28-shoot.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "C:\\.project\\etc\\11-28-shoot\\11-28-shoot\\obj\\",
+      "outputPath": "C:\\.project\\WinForm-Project\\11-28-Shoot\\11-28-shoot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"

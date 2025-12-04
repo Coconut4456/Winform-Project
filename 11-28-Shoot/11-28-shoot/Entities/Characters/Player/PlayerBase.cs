@@ -1,6 +1,6 @@
-﻿namespace _11_28_shoot.Entities.Characters;
+﻿namespace _11_28_shoot.Entities.Characters.Player;
 
-public abstract class UnitBase
+public abstract class PlayerBase
 {
     public Label Label { get; set; } = new();
     public string Name { get; set; } = "";

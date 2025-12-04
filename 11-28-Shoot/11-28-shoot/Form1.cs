@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 using _11_28_shoot.Entities.Characters;
+using _11_28_shoot.Entities.Characters.Enemy;
+using _11_28_shoot.Entities.Characters.Player;
 using _11_28_shoot.Entities.Projectiles.Bullet;
 using Timer = System.Windows.Forms.Timer;
 
@@ -7,12 +9,13 @@ namespace _11_28_shoot;
 
 public partial class Form1 : Form
 {
+    private readonly Debug _debug;
     private readonly Player _player;
     private readonly BulletPool _bulletPool;
     private readonly EnemyPool _enemyPool;
     private readonly Timer _gameTimer;
-    private readonly Timer _enemyTimer;
-    private readonly Random _random;
+    private readonly Timer _enemySpawnTimer;
+    private readonly int _margin;
 
     [DllImport("user32.dll")]
     static extern short GetAsyncKeyState(int vKey);
@@ -25,11 +28,12 @@ public partial class Form1 : Form
         _bulletPool = new BulletPool();
         _enemyPool = new EnemyPool();
         _gameTimer = new Timer();
-        _enemyTimer = new Timer();
-        _random = new Random();
-
-        this.Controls.Add(_player.Label);
+        _enemySpawnTimer = new Timer();
+        _margin = 30;
         GameStart();
+
+        _debug = new(_enemyPool.SpawnedEnemyList);
+        _debug.Show();
     }
 
     /// <summary>
@@ -37,8 +41,8 @@ public partial class Form1 : Form
     /// </summary>
     public void InitializeUI()
     {
-        this.ClientSize = new Size(600, 800);
-        this.Size = ClientSize;
+        this.Size = new Size(600, 800);
+        this.ClientSize = this.Size;
         this.StartPosition = FormStartPosition.CenterScreen;
         this.BackColor = Color.Black;
     }
@@ -53,16 +57,17 @@ public partial class Form1 : Form
         _gameTimer.Interval = 16; // 16 = 60 FPS
         _gameTimer.Tick += GameTimer_Tick!;
         _gameTimer.Start();
-        _enemyTimer.Interval = 1000;
-        _enemyTimer.Tick += EnemySpawnTimer_Tick!;
-        _enemyTimer.Start();
-
+        _enemySpawnTimer.Interval = 3000;
+        _enemySpawnTimer.Tick += EnemySpawnTimer_Tick!;
+        _enemySpawnTimer.Start();
+        this.Controls.Add(_player.Label);
+        
         foreach (BulletBase bullet in _bulletPool.ReadyBullets)
         {
             this.Controls.Add(bullet.Label);
         }
 
-        foreach (UnitBase enemy in _enemyPool.ReadyEnemys)
+        foreach (EnemyBase enemy in _enemyPool.ReadyEnemyQueue)
         {
             this.Controls.Add(enemy.Label);
         }
@@ -117,9 +122,6 @@ public partial class Form1 : Form
                 _player.MoveDown();
 
         _bulletPool.UpdateAll();
-
-        if (GetAsyncKeyState((int)Keys.M) < 0)
-            _enemyPool.Spawn(new Point(100, 0));
     }
 
     /// <summary>
@@ -127,7 +129,7 @@ public partial class Form1 : Form
     /// </summary>
     public void UpdateEnemy()
     {
-        _enemyPool.UpdateAll(_random, this.ClientSize);
+        _enemyPool.UpdateAll(this.ClientSize);
     }
 
     /// <summary>
@@ -137,7 +139,7 @@ public partial class Form1 : Form
     {
         foreach (BulletBase bullet in _bulletPool.SpawnedBullets)
         {
-            foreach (UnitBase enemy in _enemyPool.SpawnedEnemys)
+            foreach (EnemyBase enemy in _enemyPool.SpawnedEnemyList)
             {
                 if (!bullet.Bounds.IntersectsWith(enemy.Bounds))
                     continue;
@@ -146,18 +148,27 @@ public partial class Form1 : Form
                 enemy.OnHit();
             }
         }
+
+        foreach (EnemyBase enemy in _enemyPool.SpawnedEnemyList)
+        {
+            int minMargin = _margin;
+            int maxMargin = this.ClientSize.Width - enemy.Label.Width - _margin;
+
+            if (enemy.Position.X <= minMargin || maxMargin <= enemy.Position.X + enemy.Label.Width) 
+                enemy.IsCollision = true;
+        }
     }
 
     /// <summary>
-    /// 플레이어 행동 타이머
+    /// 게임 타이머
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     public void GameTimer_Tick(object sender, EventArgs e)
     {
-        CheckCollision();
         UpdatePlayer();
         UpdateEnemy();
+        CheckCollision();
     }
 
     /// <summary>
@@ -167,6 +178,7 @@ public partial class Form1 : Form
     /// <param name="e"></param>
     public void EnemySpawnTimer_Tick(object sender, EventArgs e)
     {
-        _enemyPool.Spawn(new Point(_random.Next(10, this.ClientSize.Width), 0));
+        int halfClientWidth = this.ClientSize.Width / 2;
+        _enemyPool.Spawn(halfClientWidth - 50, halfClientWidth + 50);
     }
 }

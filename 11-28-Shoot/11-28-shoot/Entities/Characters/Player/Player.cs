@@ -1,6 +1,8 @@
-﻿namespace _11_28_shoot.Entities.Characters;
+﻿using _11_28_shoot.Entities.Characters.Enemy;
 
-public class Player : UnitBase
+namespace _11_28_shoot.Entities.Characters.Player;
+
+public class Player : PlayerBase
 {
     private DateTime _lastShootTime = DateTime.MinValue;
     private int _shootCooldownMs;
